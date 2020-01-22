@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="logBox_section_title_bg">#ccc</color>
+    <color name="logBox_section_title_text">#333</color>
+</resources>

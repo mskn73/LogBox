@@ -1,5 +1,7 @@
 package com.mskn73.logsbox
 
+import java.io.Serializable
+
 class DeveloperDebug {
     companion object {
         private val records = mutableMapOf<String, MutableList<DeveloperRecord>>()
@@ -14,7 +16,7 @@ class DeveloperDebug {
 
         fun getTypes(): List<String> = records.keys.toList()
 
-        fun getRecorsByType(type: String): List<DeveloperRecord> =
+        fun getRecordsByType(type: String): List<DeveloperRecord> =
             records[type]?.toList() ?: emptyList()
     }
 }
@@ -24,4 +26,8 @@ data class DeveloperRecord(
     val request: String,
     val response: String,
     val timeMillis: Long = System.currentTimeMillis()
-)
+) : Serializable {
+    companion object {
+        const val KEY = "DeveloperRecord"
+    }
+}

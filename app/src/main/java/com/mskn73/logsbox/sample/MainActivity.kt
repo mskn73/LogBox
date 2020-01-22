@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.mskn73.logsbox.DeveloperDebug
-import com.mskn73.logsbox.DeveloperRecord
 import com.mskn73.logsbox.LogsBoxFragment
-import com.mskn73.logsbox.bytype.LogItemsByTypeFragment
 
-class MainActivity : AppCompatActivity(), LogItemsByTypeFragment.OnListFragmentInteractionListener {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,20 +20,11 @@ class MainActivity : AppCompatActivity(), LogItemsByTypeFragment.OnListFragmentI
         DeveloperDebug.record("bluetooth", "bapi_request2", "bapi_request2", "bapi_response2")
         DeveloperDebug.record("bluetooth", "bapi_request3", "bapi_request3", "bapi_response3")
 
-        Log.v("testXXX", DeveloperDebug.getRecorsByType("network").toString())
+        Log.v("testXXX", DeveloperDebug.getRecordsByType("network").toString())
 
-        val transaction = supportFragmentManager.beginTransaction().apply {
-            // Replace whatever is in the fragment_container view with this fragment,
-            // and add the transaction to the back stack so the user can navigate back
+        supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, LogsBoxFragment.newInstance())
-            addToBackStack(null)
+            commit()
         }
-
-        // Commit the transaction
-        transaction.commit()
-    }
-
-    override fun onListFragmentInteraction(item: DeveloperRecord?) {
-        Log.v("testXXX", item.toString())
     }
 }
