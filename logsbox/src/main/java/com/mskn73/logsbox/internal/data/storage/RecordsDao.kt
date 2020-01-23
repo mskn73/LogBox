@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface RecordsDao {
+internal interface RecordsDao {
     @Query("SELECT * FROM records WHERE type = :type")
     suspend fun getAllByType(type: String): List<DeveloperRecordEntity>
 

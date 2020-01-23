@@ -4,7 +4,7 @@ import com.mskn73.logsbox.DeveloperRecord
 import com.mskn73.logsbox.internal.LogsDispatcher
 import kotlinx.coroutines.withContext
 
-class RecordsDataSource(private val database: RecordsDatabase) {
+internal class RecordsDataSource(private val database: RecordsDatabase) {
 
     suspend fun getTypes(): List<String> = withContext(LogsDispatcher.io) {
         database.recordDao().getTypes()

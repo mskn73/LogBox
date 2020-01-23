@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.mskn73.logsbox.DeveloperRecord
 
 @Entity(tableName = "records")
-data class DeveloperRecordEntity(
+internal data class DeveloperRecordEntity(
     @PrimaryKey(autoGenerate = true) val id: Long? = null,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "type") val type: String,
@@ -18,4 +18,4 @@ data class DeveloperRecordEntity(
     fun toDomain(): DeveloperRecord = DeveloperRecord(title, type, request, response, timeMillis)
 }
 
-fun List<DeveloperRecordEntity>.toDomain(): List<DeveloperRecord> = map { it.toDomain() }
+internal fun List<DeveloperRecordEntity>.toDomain(): List<DeveloperRecord> = map { it.toDomain() }
