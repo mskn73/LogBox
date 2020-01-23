@@ -2,19 +2,28 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'de.mannodermaus.android-junit5'
 
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.mskn73'
 
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.2"
+    compileSdkVersion compile_sdk
 
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'LICENSE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion target_sdk
+        minSdkVersion min_sdk
         versionCode 1
         versionName "1.0"
 
@@ -29,26 +38,50 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
+        }
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation "androidx.viewpager2:viewpager2:1.0.0"
-    implementation 'com.google.android.material:material:1.2.0-alpha03'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    kapt libs.databinding_compiler
+    kapt libs.arch_comp_room_compiler
+    kaptTest libs.arch_comp_room_compiler
 
-    def room_version = "2.2.3"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-runtime:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    implementation libs.arch_comp_extensions
+    implementation libs.arch_comp_livedata
+    implementation libs.arch_comp_viewmodel
+    implementation libs.arch_comp_room
+    implementation libs.arch_comp_room_ktx
+    implementation libs.constraint
+    implementation libs.design
+    implementation libs.kotlin_stdlib
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation(libs.arch_comp_room_test) {
+        exclude module: 'junit'
+    }
+    testImplementation(libs.arch_comp_test) {
+        exclude module: 'junit'
+    }
+    testImplementation libs.junit_api
+    testImplementation libs.kotlintest
+    testImplementation libs.mockito_kotlin
+
+    testRuntimeOnly libs.junit_engine
+
+    androidTestImplementation libs.mockito_kotlin
+    androidTestImplementation (libs.barista) {
+        exclude group: 'com.android.support'
+        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
+    }
 }
