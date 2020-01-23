@@ -15,7 +15,7 @@ internal class DatabaseModule(
     private fun providesDatabase(): RecordsDatabase =
         Room.databaseBuilder(applicationContext, RecordsDatabase::class.java, databaseName).build()
 
-    private fun providesRecordsDataSource(): RecordsDataSource= RecordsDataSource(
+    private fun providesRecordsDataSource(): RecordsDataSource = RecordsDataSource(
         providesDatabase()
     )
 

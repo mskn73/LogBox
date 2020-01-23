@@ -26,7 +26,7 @@ internal class LogDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context, developerRecord: DeveloperRecord) : Intent {
+        fun newIntent(context: Context, developerRecord: DeveloperRecord): Intent {
             return Intent(context, LogDetailActivity::class.java).apply {
                 putExtra(DeveloperRecord.KEY, developerRecord)
             }

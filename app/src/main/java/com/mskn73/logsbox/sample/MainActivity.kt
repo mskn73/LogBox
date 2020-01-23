@@ -2,7 +2,6 @@ package com.mskn73.logsbox.sample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.mskn73.logsbox.DeveloperDebug
 import com.mskn73.logsbox.LogBox
 

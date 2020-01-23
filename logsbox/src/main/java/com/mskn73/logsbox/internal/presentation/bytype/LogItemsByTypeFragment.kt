@@ -11,7 +11,6 @@ import com.mskn73.logsbox.R
 import com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity
 import kotlinx.android.synthetic.main.fragment_logitem_list.*
 
-
 internal class LogItemsByTypeFragment : Fragment() {
 
     private var debugType = "all"
@@ -25,7 +24,8 @@ internal class LogItemsByTypeFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_logitem_list, container, false)
 

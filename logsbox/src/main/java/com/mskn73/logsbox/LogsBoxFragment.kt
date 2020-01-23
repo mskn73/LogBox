@@ -1,6 +1,5 @@
 package com.mskn73.logsbox
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,17 +11,17 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.mskn73.logsbox.internal.presentation.bytype.LogItemsByTypeFragment
 import kotlinx.android.synthetic.main.fragment_logs_box.*
 
-
 internal class LogsBoxFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = inflater.inflate(R.layout.fragment_logs_box, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity?.let {  pager.adapter = ScreenSlidePagerAdapter(it) }
+        activity?.let { pager.adapter = ScreenSlidePagerAdapter(it) }
 
         TabLayoutMediator(tab_layout, pager) { tab, position ->
             tab.text = DeveloperDebug.getTypes()[position]
@@ -39,6 +38,6 @@ internal class LogsBoxFragment : Fragment() {
     }
 
     companion object {
-        fun newInstance() : LogsBoxFragment = LogsBoxFragment()
+        fun newInstance(): LogsBoxFragment = LogsBoxFragment()
     }
 }
