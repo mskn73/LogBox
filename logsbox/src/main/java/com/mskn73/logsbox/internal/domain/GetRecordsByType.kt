@@ -5,5 +5,5 @@ import com.mskn73.logsbox.DeveloperRecord
 internal class GetRecordsByType(private val repository: RecordsRepository) {
 
     suspend operator fun invoke(type: String) : List<DeveloperRecord> =
-        repository.getAll()
+        repository.getAllByType(type)
 }

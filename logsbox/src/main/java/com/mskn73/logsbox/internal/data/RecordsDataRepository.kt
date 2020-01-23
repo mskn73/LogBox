@@ -8,6 +8,8 @@ internal class RecordsDataRepository(
     private val recordsDataSource: RecordsDataSource
 ) : RecordsRepository {
 
+    override suspend fun getTypes(): List<String> = recordsDataSource.getTypes()
+
     override suspend fun getAllByType(type: String): List<DeveloperRecord> =
         recordsDataSource.getAllByType(type)
 

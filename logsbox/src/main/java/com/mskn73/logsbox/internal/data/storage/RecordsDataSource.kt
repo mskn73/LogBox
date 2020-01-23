@@ -6,6 +6,10 @@ import kotlinx.coroutines.withContext
 
 class RecordsDataSource(private val database: RecordsDatabase) {
 
+    suspend fun getTypes(): List<String> = withContext(LogsDispatcher.io) {
+        database.recordDao().getTypes()
+    }
+
     suspend fun getAllByType(type: String): List<DeveloperRecord> = withContext(LogsDispatcher.io) {
         database.recordDao().getAllByType(type).toDomain()
     }
@@ -13,7 +17,13 @@ class RecordsDataSource(private val database: RecordsDatabase) {
     suspend fun save(developerRecord: DeveloperRecord) = withContext(LogsDispatcher.io) {
         database.recordDao().insert(
             with(developerRecord) {
-                DeveloperRecordEntity(title, type, request, response, timeMillis)
+                DeveloperRecordEntity(
+                    title = title,
+                    type = type,
+                    request = request,
+                    response = response,
+                    timeMillis = timeMillis
+                )
             }
         )
     }
