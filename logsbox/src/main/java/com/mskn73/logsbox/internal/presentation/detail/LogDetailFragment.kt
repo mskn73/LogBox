@@ -1,4 +1,4 @@
-package com.mskn73.logsbox.detail
+package com.mskn73.logsbox.internal.presentation.detail
 
 
 import android.os.Bundle

@@ -1,4 +1,4 @@
-package com.mskn73.logsbox.bytype
+package com.mskn73.logsbox.internal.presentation.bytype
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater

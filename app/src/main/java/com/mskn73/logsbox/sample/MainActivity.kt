@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import com.mskn73.logsbox.DeveloperDebug
 import com.mskn73.logsbox.LogBox
-import com.mskn73.logsbox.LogsBoxFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,8 +19,6 @@ class MainActivity : AppCompatActivity() {
         DeveloperDebug.record("bluetooth", "bapi_request1", "bapi_request1", "bapi_response1")
         DeveloperDebug.record("bluetooth", "bapi_request2", "bapi_request2", "bapi_response2")
         DeveloperDebug.record("bluetooth", "bapi_request3", "bapi_request3", "bapi_response3")
-
-        Log.v("testXXX", DeveloperDebug.getRecordsByType("network").toString())
 
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, LogBox.getFragment())

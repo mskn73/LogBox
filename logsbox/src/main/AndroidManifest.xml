@@ -3,7 +3,7 @@
     package="com.mskn73.logsbox">
 
     <application>
-        <activity android:name=".detail.LogDetailActivity"></activity>
+        <activity android:name="com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity"></activity>
     </application>
 
 </manifest>

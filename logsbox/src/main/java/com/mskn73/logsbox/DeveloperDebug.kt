@@ -11,7 +11,7 @@ class DeveloperDebug {
                 records[type] = mutableListOf()
             }
 
-            records[type]?.add(DeveloperRecord(title, request, response))
+            records[type]?.add(DeveloperRecord(title, type, request, response))
         }
 
         fun getTypes(): List<String> = records.keys.toList()
@@ -23,10 +23,12 @@ class DeveloperDebug {
 
 data class DeveloperRecord(
     val title: String,
+    val type: String,
     val request: String,
     val response: String,
     val timeMillis: Long = System.currentTimeMillis()
 ) : Serializable {
+
     companion object {
         const val KEY = "DeveloperRecord"
     }

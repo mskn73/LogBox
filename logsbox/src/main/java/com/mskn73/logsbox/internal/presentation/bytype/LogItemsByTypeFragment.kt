@@ -1,4 +1,4 @@
-package com.mskn73.logsbox.bytype
+package com.mskn73.logsbox.internal.presentation.bytype
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.mskn73.logsbox.DeveloperDebug
 import com.mskn73.logsbox.DeveloperRecord
 import com.mskn73.logsbox.R
-import com.mskn73.logsbox.detail.LogDetailActivity
+import com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity
 import kotlinx.android.synthetic.main.fragment_logitem_list.*
 
 

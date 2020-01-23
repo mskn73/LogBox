@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
     android:fillViewport="true"
-    tools:context=".detail.LogDetailFragment">
+    tools:context=".internal.presentation.detail.LogDetailFragment">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"

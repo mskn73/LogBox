@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
-import com.mskn73.logsbox.bytype.LogItemsByTypeFragment
+import com.mskn73.logsbox.internal.presentation.bytype.LogItemsByTypeFragment
 import kotlinx.android.synthetic.main.fragment_logs_box.*
 
 
