@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.fragment_logitem.view.*
 import java.text.DateFormat.SHORT
 import java.text.SimpleDateFormat
 
-class LogsItemByTypeRecyclerViewAdapter(
+internal class LogsItemByTypeRecyclerViewAdapter(
     private val mValues: List<DeveloperRecord>,
     private val mListener: (DeveloperRecord) -> Unit
 ) : RecyclerView.Adapter<LogsItemByTypeRecyclerViewAdapter.ViewHolder>() {

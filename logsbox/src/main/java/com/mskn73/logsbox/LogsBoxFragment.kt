@@ -13,7 +13,7 @@ import com.mskn73.logsbox.bytype.LogItemsByTypeFragment
 import kotlinx.android.synthetic.main.fragment_logs_box.*
 
 
-class LogsBoxFragment : Fragment() {
+internal class LogsBoxFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

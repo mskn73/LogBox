@@ -12,7 +12,7 @@ import com.mskn73.logsbox.detail.LogDetailActivity
 import kotlinx.android.synthetic.main.fragment_logitem_list.*
 
 
-class LogItemsByTypeFragment : Fragment() {
+internal class LogItemsByTypeFragment : Fragment() {
 
     private var debugType = "all"
 

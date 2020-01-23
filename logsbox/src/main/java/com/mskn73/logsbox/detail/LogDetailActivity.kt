@@ -7,7 +7,7 @@ import android.os.Bundle
 import com.mskn73.logsbox.DeveloperRecord
 import com.mskn73.logsbox.R
 
-class LogDetailActivity : AppCompatActivity() {
+internal class LogDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
