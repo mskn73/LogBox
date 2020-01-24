@@ -24,6 +24,7 @@ ext {
             arch_comp_extensions    : [group: 'androidx.lifecycle', name: 'lifecycle-extensions', version: versions.arch_comp_lifecycle],
             arch_comp_livedata      : [group: 'androidx.lifecycle', name: 'lifecycle-livedata', version: versions.arch_comp_lifecycle],
             arch_comp_viewmodel     : [group: 'androidx.lifecycle', name: 'lifecycle-viewmodel', version: versions.arch_comp_lifecycle],
+            arch_comp_viewmodel_ktx : [group: 'androidx.lifecycle', name: 'lifecycle-viewmodel-ktx', version: versions.arch_comp_lifecycle],
             arch_comp_room          : [group: 'androidx.room', name: 'room-runtime', version: versions.arch_comp_persistence],
             arch_comp_room_compiler : [group: 'androidx.room', name: 'room-compiler', version: versions.arch_comp_persistence],
             arch_comp_room_ktx      : [group: 'androidx.room', name: 'room-ktx', version: versions.arch_comp_persistence],

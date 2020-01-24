@@ -38,10 +38,6 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
-    }
-
     androidExtensions {
         experimental = true
     }
@@ -54,13 +50,13 @@ android {
 }
 
 dependencies {
-    kapt libs.databinding_compiler
     kapt libs.arch_comp_room_compiler
     kaptTest libs.arch_comp_room_compiler
 
     implementation libs.arch_comp_extensions
     implementation libs.arch_comp_livedata
     implementation libs.arch_comp_viewmodel
+    implementation libs.arch_comp_viewmodel_ktx
     implementation libs.arch_comp_room
     implementation libs.arch_comp_room_ktx
     implementation libs.constraint
