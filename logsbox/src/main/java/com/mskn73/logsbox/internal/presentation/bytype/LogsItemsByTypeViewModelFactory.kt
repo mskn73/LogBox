@@ -17,5 +17,4 @@ class LogsItemsByTypeViewModelFactory(context: Context) : ViewModelProvider.Fact
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }

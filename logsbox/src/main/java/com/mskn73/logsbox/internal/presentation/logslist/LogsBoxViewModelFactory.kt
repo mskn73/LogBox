@@ -17,5 +17,4 @@ class LogsBoxViewModelFactory(context: Context) : ViewModelProvider.Factory {
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }
