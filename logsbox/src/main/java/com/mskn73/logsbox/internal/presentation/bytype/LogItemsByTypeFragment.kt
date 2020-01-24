@@ -5,36 +5,47 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.mskn73.logsbox.DeveloperDebug
 import com.mskn73.logsbox.DeveloperRecord
 import com.mskn73.logsbox.R
 import com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity
+import com.mskn73.logsbox.internal.presentation.logslist.LogsBoxViewModel
+import com.mskn73.logsbox.internal.presentation.logslist.LogsBoxViewModelFactory
 import kotlinx.android.synthetic.main.fragment_logitem_list.*
 
 internal class LogItemsByTypeFragment : Fragment() {
 
+    private lateinit var viewModelFactory: LogsItemsByTypeViewModelFactory
+    private lateinit var viewModel: LogsItemsByTypeViewModel
+
     private var debugType = "all"
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        arguments?.let {
-            debugType = it.getString(ARG_DEBUG_TYPE, debugType)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_logitem_list, container, false)
+    ): View? {
+        viewModelFactory = LogsItemsByTypeViewModelFactory(inflater.context)
+        viewModel = ViewModelProviders.of(this, viewModelFactory)
+            .get(LogsItemsByTypeViewModel::class.java)
+        return inflater.inflate(R.layout.fragment_logitem_list, container, false)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        arguments?.let {
+            viewModel.loadTypes(it.getString(ARG_DEBUG_TYPE, debugType))
+        }
+        viewModel.logs.observe(this, Observer { handleLogs(it) })
+    }
+
+    private fun handleLogs(logs: List<DeveloperRecord>) {
         with(recordsList) {
             adapter =
                 LogsItemByTypeRecyclerViewAdapter(
-                    DeveloperDebug.getRecordsByType(debugType)
+                    logs
                 ) {
                     goToDetail(it)
                 }
