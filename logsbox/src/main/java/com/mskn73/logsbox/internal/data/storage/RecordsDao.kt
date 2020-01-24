@@ -6,7 +6,7 @@ import androidx.room.Query
 
 @Dao
 internal interface RecordsDao {
-    @Query("SELECT * FROM records WHERE type = :type")
+    @Query("SELECT * FROM records WHERE type = :type ORDER BY timeMillis DESC")
     suspend fun getAllByType(type: String): List<DeveloperRecordEntity>
 
     @Query("SELECT DISTINCT type FROM records")
