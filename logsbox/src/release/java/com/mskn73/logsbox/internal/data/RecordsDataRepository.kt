@@ -1,7 +1,7 @@
 package com.mskn73.logsbox.internal.data
 
-import com.mskn73.logsbox.DeveloperRecord
 import com.mskn73.logsbox.internal.data.storage.RecordsDataSource
+import com.mskn73.logsbox.internal.domain.DeveloperRecord
 import com.mskn73.logsbox.internal.domain.RecordsRepository
 
 internal class RecordsDataRepository(

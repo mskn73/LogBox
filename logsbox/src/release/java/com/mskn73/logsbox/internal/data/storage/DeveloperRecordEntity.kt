@@ -3,7 +3,7 @@ package com.mskn73.logsbox.internal.data.storage
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.mskn73.logsbox.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.DeveloperRecord
 
 @Entity(tableName = "records")
 internal data class DeveloperRecordEntity(

@@ -1,7 +1,5 @@
 package com.mskn73.logsbox.internal.domain
 
-import com.mskn73.logsbox.DeveloperRecord
-
 internal interface RecordsRepository {
 
     suspend fun getTypes(): List<String>

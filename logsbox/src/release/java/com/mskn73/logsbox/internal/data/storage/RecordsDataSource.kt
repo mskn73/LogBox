@@ -1,7 +1,7 @@
 package com.mskn73.logsbox.internal.data.storage
 
-import com.mskn73.logsbox.DeveloperRecord
 import com.mskn73.logsbox.internal.LogsDispatcher
+import com.mskn73.logsbox.internal.domain.DeveloperRecord
 import kotlinx.coroutines.withContext
 
 internal class RecordsDataSource(private val database: RecordsDatabase) {

@@ -3,13 +3,13 @@ package com.mskn73.logsbox
 import android.content.Context
 import androidx.fragment.app.Fragment
 
-object LogBox {
+object LogBoxFactory {
 
     fun getFragment(): Fragment =
-        LogBoxFactory.getFragment()
+        Fragment()
 
     fun init(context: Context, databaseName: String = "log-box.db") {
-        LogBoxFactory.init(context, databaseName)
+        // no-op
     }
 
     fun log(
@@ -18,6 +18,6 @@ object LogBox {
         request: String,
         response: String
     ) {
-        LogBoxFactory.log(type, title, request, response)
+        // no-op
     }
 }

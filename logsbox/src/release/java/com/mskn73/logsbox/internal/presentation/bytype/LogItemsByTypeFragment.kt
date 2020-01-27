@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.mskn73.logsbox.DeveloperRecord
 import com.mskn73.logsbox.R
+import com.mskn73.logsbox.internal.domain.DeveloperRecord
 import com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity
 import kotlinx.android.synthetic.main.fragment_logitem_list.*
 

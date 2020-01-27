@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mskn73.logsbox.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.DeveloperRecord
 import com.mskn73.logsbox.internal.domain.GetRecordsByType
 import kotlinx.coroutines.launch
 
