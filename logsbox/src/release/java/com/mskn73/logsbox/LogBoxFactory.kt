@@ -2,6 +2,9 @@ package com.mskn73.logsbox
 
 import android.content.Context
 import androidx.fragment.app.Fragment
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
+import com.google.gson.JsonSyntaxException
 import com.mskn73.logsbox.internal.di.LogsMainModule
 import com.mskn73.logsbox.internal.domain.AddRecord
 import com.mskn73.logsbox.internal.domain.DeveloperRecord
@@ -31,7 +34,10 @@ object LogBoxFactory {
             GlobalScope.launch {
                 addRecord(
                     DeveloperRecord(
-                        title, type, request, response
+                        title,
+                        type,
+                        request,
+                        response
                     )
                 )
             }
