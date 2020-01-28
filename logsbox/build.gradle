@@ -75,19 +75,19 @@ android {
     }
 }
 
-    android.libraryVariants.all { variant ->
-        if (variant.name.toLowerCase().contains("debug")) {
-            return
-        }
-        def bundleTask = tasks["bundle${ variant.name.capitalize() }Aar"]
-        artifacts {
-            archives(bundleTask.archivePath) {
-                classifier variant.name.capitalize().replace("Release", "")
-                builtBy bundleTask
-                name = project.name
-            }
+android.libraryVariants.all { variant ->
+    if (variant.name.toLowerCase().contains("debug")) {
+        return
+    }
+    def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+    artifacts {
+        archives(bundleTask.archivePath) {
+            classifier variant.name.capitalize().replace("Release", "")
+            builtBy bundleTask
+            name = project.name
         }
     }
+}
 
 dependencies {
     kapt libs.arch_comp_room_compiler
@@ -101,6 +101,7 @@ dependencies {
     implementation libs.arch_comp_room_ktx
     implementation libs.constraint
     implementation libs.design
+    implementation libs.gson
     implementation libs.kotlin_stdlib
 
     testImplementation(libs.arch_comp_room_test) {
@@ -116,7 +117,7 @@ dependencies {
     testRuntimeOnly libs.junit_engine
 
     androidTestImplementation libs.mockito_kotlin
-    androidTestImplementation (libs.barista) {
+    androidTestImplementation(libs.barista) {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
     }
