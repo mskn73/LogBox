@@ -3,6 +3,7 @@ package com.mskn73.logsbox.sample
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mskn73.logsbox.LogBox
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,9 +21,6 @@ class MainActivity : AppCompatActivity() {
         LogBox.log("bluetooth", "bapi_request2", "bapi_request2", "bapi_response2")
         LogBox.log("bluetooth", "bapi_request3", "bapi_request3", "bapi_response3")
 
-        supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fragment_container, LogBox.getFragment())
-            commit()
-        }
+        openLogBox.setOnClickListener { LogBox.openLogBox(this) }
     }
 }

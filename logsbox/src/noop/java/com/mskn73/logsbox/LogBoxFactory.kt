@@ -1,12 +1,12 @@
 package com.mskn73.logsbox
 
 import android.content.Context
-import androidx.fragment.app.Fragment
 
 object LogBoxFactory {
 
-    fun getFragment(): Fragment =
-        Fragment()
+    fun openLogs(context: Context) {
+        // no-op
+    }
 
     fun init(context: Context, databaseName: String = "log-box.db") {
         // no-op

@@ -99,7 +99,6 @@ dependencies {
     implementation libs.arch_comp_viewmodel_ktx
     implementation libs.arch_comp_room
     implementation libs.arch_comp_room_ktx
-    implementation libs.constraint
     implementation libs.design
     implementation libs.kotlin_stdlib
 

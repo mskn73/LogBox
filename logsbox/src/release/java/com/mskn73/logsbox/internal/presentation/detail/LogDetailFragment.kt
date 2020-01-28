@@ -8,7 +8,7 @@ import android.view.ViewGroup
 
 import com.mskn73.logsbox.R
 import com.mskn73.logsbox.internal.domain.DeveloperRecord
-import kotlinx.android.synthetic.main.fragment_log_detail.*
+import kotlinx.android.synthetic.release.fragment_log_detail.*
 
 internal class LogDetailFragment : Fragment() {
 

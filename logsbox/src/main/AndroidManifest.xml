@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mskn73.logsbox">
 
-    <application>
-        <activity android:name="com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity"></activity>
-    </application>
+    <application/>
 
 </manifest>

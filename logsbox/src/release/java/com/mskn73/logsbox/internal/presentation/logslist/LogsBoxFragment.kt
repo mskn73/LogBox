@@ -12,7 +12,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mskn73.logsbox.R
 import com.mskn73.logsbox.internal.presentation.bytype.LogItemsByTypeFragment
-import kotlinx.android.synthetic.main.fragment_logs_box.*
+import kotlinx.android.synthetic.release.fragment_logs_box.*
 
 internal class LogsBoxFragment : Fragment() {
 
