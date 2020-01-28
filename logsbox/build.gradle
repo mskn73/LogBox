@@ -97,8 +97,8 @@ dependencies {
     implementation libs.arch_comp_livedata
     implementation libs.arch_comp_viewmodel
     implementation libs.arch_comp_viewmodel_ktx
-    api libs.arch_comp_room
-    api libs.arch_comp_room_ktx
+    implementation libs.arch_comp_room
+    implementation libs.arch_comp_room_ktx
     implementation libs.constraint
     implementation libs.design
     implementation libs.kotlin_stdlib
