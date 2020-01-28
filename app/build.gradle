@@ -38,8 +38,10 @@ android {
 
 
 dependencies {
-    //implementation project(path: ':logsbox')
-    implementation "com.github.mskn73:LogBox:0.0.6@aar"
+    implementation project(path: ':logsbox')
+
+//    implementation "com.github.mskn73:LogBox:0.0.7:Noop@aar"
+//    implementation "com.github.mskn73:LogBox:0.0.7"
 
     implementation libs.kotlin_stdlib
     implementation libs.constraint
