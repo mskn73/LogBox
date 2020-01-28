@@ -13,10 +13,10 @@ class MainActivity : AppCompatActivity() {
 
         LogBox.init(applicationContext)
 
-        LogBox.log("network", "https://mail.google.com/mail/u/0/#inbox", "request1", "response1")
+        LogBox.log("network", "Register User", "{\"firstName\":\"Fran\",\"lastName\":\"Hernandez\", \"emailId\":\"<somemail>@gmail.com\"}", "{\"id\":1,\"firstName\":\"Lokesh\",\"lastName\":\"Gupta\", \"emailId\":\"<somemail>@gmail.com\"}")
         LogBox.log("network", "https://mail.google.com/mail/u/0/#inbox", "request2", "response2")
         LogBox.log("network", "https://mail.google.com/mail/u/0/#inbox", "request3", "response3")
-        LogBox.log("network1", "https://mail.google.com/mail/u/0/#inbox", "request4", "response4")
+        LogBox.log("network", "https://mail.google.com/mail/u/0/#inbox", "request4", "response4")
         LogBox.log("bluetooth", "bapi_request1", "bapi_request1", "bapi_response1")
         LogBox.log("bluetooth", "bapi_request2", "bapi_request2", "bapi_response2")
         LogBox.log("bluetooth", "bapi_request3", "bapi_request3", "bapi_response3")
