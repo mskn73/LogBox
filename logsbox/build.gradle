@@ -73,14 +73,6 @@ android {
             arg("room.schemaLocation", "$projectDir/schemas".toString())
         }
     }
-
-    libraryVariants.all { variant ->
-        variant.outputs.all { output ->
-            if (outputFile != null && outputFileName.endsWith('.aar')) {
-                outputFileName = "${archivesBaseName}-${version}.aar"
-            }
-        }
-    }
 }
 
     android.libraryVariants.all { variant ->
