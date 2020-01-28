@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.mskn73.logsbox.LogBox
+import com.mskn73.logsbox.LogBoxFactory
 import com.mskn73.logsbox.R
 
 internal class LogBoxActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ internal class LogBoxActivity : AppCompatActivity() {
 
     private fun showLogBoxFragment() {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.logboxContainer, LogBox.getFragment())
+            replace(R.id.logboxContainer, LogBoxFactory.getFragment())
             commit()
         }
     }

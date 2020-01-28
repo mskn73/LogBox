@@ -90,17 +90,16 @@ android {
     }
 
 dependencies {
-    kapt libs.arch_comp_room_compiler
+    kaptRelease libs.arch_comp_room_compiler
     kaptTest libs.arch_comp_room_compiler
 
-    implementation libs.arch_comp_extensions
-    implementation libs.arch_comp_livedata
-    implementation libs.arch_comp_viewmodel
-    implementation libs.arch_comp_viewmodel_ktx
-    implementation libs.arch_comp_room
-    implementation libs.arch_comp_room_ktx
-    implementation libs.constraint
-    implementation libs.design
+    releaseImplementation libs.arch_comp_extensions
+    releaseImplementation libs.arch_comp_livedata
+    releaseImplementation libs.arch_comp_viewmodel
+    releaseImplementation libs.arch_comp_viewmodel_ktx
+    releaseImplementation libs.arch_comp_room
+    releaseImplementation libs.arch_comp_room_ktx
+    releaseImplementation libs.design
     implementation libs.kotlin_stdlib
 
     testImplementation(libs.arch_comp_room_test) {
