@@ -37,7 +37,7 @@ android {
 
 
 dependencies {
-    debugImplementation project(path: ':logsbox')
+    implementation project(path: ':logsbox')
 
     implementation libs.kotlin_stdlib
     implementation libs.constraint
