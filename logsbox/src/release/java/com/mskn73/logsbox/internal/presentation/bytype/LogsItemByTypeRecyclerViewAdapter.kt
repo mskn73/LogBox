@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.mskn73.logsbox.R
 import com.mskn73.logsbox.internal.domain.DeveloperRecord
+import kotlinx.android.synthetic.release.fragment_logitem.view.*
 
-import kotlinx.android.synthetic.main.fragment_logitem.view.*
 import java.text.DateFormat.SHORT
 import java.text.SimpleDateFormat
 
