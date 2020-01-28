@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 
 object LogBoxFactory {
 
+    fun openLogs(context: Context) {
+        // no-op
+    }
+
     fun getFragment(): Fragment =
         Fragment()
 
