@@ -1,12 +1,13 @@
 package com.mskn73.logsbox.internal.presentation.bytype
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.mskn73.logsbox.R
 import com.mskn73.logsbox.internal.domain.DeveloperRecord
 import com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity
@@ -32,10 +33,19 @@ internal class LogItemsByTypeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configureRecyclerView()
         arguments?.let {
             viewModel.loadTypes(it.getString(ARG_DEBUG_TYPE, debugType))
         }
         viewModel.logs.observe(this, Observer { handleLogs(it) })
+    }
+
+    private fun configureRecyclerView() {
+        val dividerItemDecoration = DividerItemDecoration(
+            recordsList.getContext(),
+            DividerItemDecoration.VERTICAL
+        )
+        recordsList.addItemDecoration(dividerItemDecoration)
     }
 
     private fun handleLogs(logs: List<DeveloperRecord>) {

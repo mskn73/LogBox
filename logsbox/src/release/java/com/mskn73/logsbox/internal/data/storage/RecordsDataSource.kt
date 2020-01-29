@@ -2,8 +2,6 @@ package com.mskn73.logsbox.internal.data.storage
 
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
-import com.google.gson.JsonSyntaxException
-import com.mskn73.logsbox.LogBoxFactory
 import com.mskn73.logsbox.internal.LogsDispatcher
 import com.mskn73.logsbox.internal.domain.DeveloperRecord
 import kotlinx.coroutines.withContext

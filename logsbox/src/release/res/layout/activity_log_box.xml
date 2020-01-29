@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mskn73.logsbox.internal.presentation.logslist.LogBoxActivity"
-    android:id="@+id/logboxContainer">
+    android:orientation="vertical"
+    tools:context="com.mskn73.logsbox.internal.presentation.logslist.LogBoxActivity">
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        style="?logboxTitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="LogBox" />
+
+    <FrameLayout
+        android:id="@+id/logboxContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.mskn73.logsbox.internal.presentation.logslist.LogBoxActivity" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

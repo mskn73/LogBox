@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         LogBox.init(applicationContext)
 
-        LogBox.log("network", "Register User", "{\"firstName\":\"Fran\",\"lastName\":\"Hernandez\", \"emailId\":\"<somemail>@gmail.com\"}", "{\"id\":1,\"firstName\":\"Lokesh\",\"lastName\":\"Gupta\", \"emailId\":\"<somemail>@gmail.com\"}")
+        LogBox.log("network", "Register User", "{\"firstName\":\"Fran\",\"lastName\":\"Hernandez\", \"emailId\":\"<somemail>@gmail.com\"}", "{\"id\":1,\"firstName\":\"Fran\",\"lastName\":\"Hernandez\", \"emailId\":\"<somemail>@gmail.com\"}")
         LogBox.log("network", "https://mail.google.com/mail/u/0/#inbox", "request2", "response2")
         LogBox.log("network", "https://mail.google.com/mail/u/0/#inbox", "request3", "response3")
         LogBox.log("network", "https://mail.google.com/mail/u/0/#inbox", "request4", "response4")
