@@ -13,7 +13,6 @@ import com.mskn73.logsbox.internal.domain.DeveloperRecord
 import com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity
 import kotlinx.android.synthetic.release.fragment_logitem_list.*
 
-
 internal class LogItemsByTypeFragment : Fragment() {
 
     private lateinit var viewModelFactory: LogsItemsByTypeViewModelFactory
