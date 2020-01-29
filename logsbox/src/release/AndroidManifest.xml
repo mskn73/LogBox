@@ -2,12 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mskn73.logsbox">
 
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="false" />
+
     <application>
         <activity
-            android:name="com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity"
+            android:name="com.mskn73.logsbox.internal.presentation.logslist.LogBoxActivity"
+            android:launchMode="singleTask"
             android:theme="@style/LogBoxLight" />
         <activity
-            android:name="com.mskn73.logsbox.internal.presentation.logslist.LogBoxActivity"
+            android:name="com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity"
             android:theme="@style/LogBoxLight" />
     </application>
 

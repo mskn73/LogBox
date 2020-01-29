@@ -40,7 +40,8 @@ ext {
             kotlin_stdlib           : [group: 'org.jetbrains.kotlin', name: 'kotlin-stdlib-jdk7', version: versions.kotlin],
             kotlintest              : [group: 'io.kotlintest', name: 'kotlintest-runner-junit5', version: '3.3.0'],
             mockito_kotlin          : [group: 'com.nhaarman.mockitokotlin2', name: 'mockito-kotlin', version: '2.1.0'],
-            recyclerview            : [group: 'androidx.recyclerview', name: 'recyclerview', version: '1.1.0']
+            recyclerview            : [group: 'androidx.recyclerview', name: 'recyclerview', version: '1.1.0'],
+            seismic                 : [group: 'com.squareup', name: 'seismic', version: '1.0.2']
     ]
 
 }

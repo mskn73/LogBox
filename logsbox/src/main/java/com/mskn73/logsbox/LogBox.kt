@@ -8,8 +8,8 @@ object LogBox {
         LogBoxFactory.openLogs(context)
     }
 
-    fun init(context: Context, databaseName: String = "log-box.db") {
-        LogBoxFactory.init(context, databaseName)
+    fun init(context: Context, databaseName: String = "log-box.db", shakeDetection: Boolean = false) {
+        LogBoxFactory.init(context, databaseName, shakeDetection)
     }
 
     fun log(
