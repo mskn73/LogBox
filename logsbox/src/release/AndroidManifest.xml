@@ -3,8 +3,12 @@
     package="com.mskn73.logsbox">
 
     <application>
-        <activity android:name="com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity"></activity>
-        <activity android:name="com.mskn73.logsbox.internal.presentation.logslist.LogBoxActivity"></activity>
+        <activity
+            android:name="com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity"
+            android:theme="@style/LogBoxLight" />
+        <activity
+            android:name="com.mskn73.logsbox.internal.presentation.logslist.LogBoxActivity"
+            android:theme="@style/LogBoxLight" />
     </application>
 
 </manifest>

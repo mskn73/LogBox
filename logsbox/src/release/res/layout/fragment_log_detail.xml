@@ -13,46 +13,36 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            style="?logboxTitleText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/logBox_section_title_bg"
-            android:elevation="2dp"
-            android:padding="8dp"
-            android:textAllCaps="true"
-            android:id="@+id/title"
-            android:textColor="@color/logBox_section_title_text" />
+            android:ellipsize="start"
+            android:singleLine="true" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/logBox_section_title_bg"
-            android:padding="8dp"
-            android:text="@string/request_title"
-            android:textAllCaps="true"
-            android:textColor="@color/logBox_section_title_text" />
+            style="?logboxNameText"
+            android:text="Request"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/request"
+            style="?logboxLogText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textAllCaps="true" />
+            android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/logBox_section_title_bg"
-            android:padding="8dp"
             android:text="@string/response_title"
-            android:textAllCaps="true"
-            android:textColor="@color/logBox_section_title_text" />
+            style="?logboxNameText"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/response"
+            style="?logboxLogText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:textAllCaps="true" />
+            android:layout_height="wrap_content" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </ScrollView>

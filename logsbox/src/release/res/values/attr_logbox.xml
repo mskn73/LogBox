@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="logboxTitleText" format="reference"/>
+    <attr name="logboxTabBar" format="reference"/>
+    <attr name="logboxDateText" format="reference"/>
+    <attr name="logboxNameText" format="reference"/>
+    <attr name="logboxLogText" format="reference"/>
+</resources>
