@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        LogBox.init(applicationContext)
+        LogBox.init(applicationContext, shakeDetection = true)
 
         LogBox.log("network", "Register User", "{\"firstName\":\"Fran\",\"lastName\":\"Hernandez\", \"emailId\":\"<somemail>@gmail.com\"}", "{\"id\":1,\"firstName\":\"Fran\",\"lastName\":\"Hernandez\", \"emailId\":\"<somemail>@gmail.com\"}")
         LogBox.log("network", "https://mail.google.com/mail/u/0/#inbox", "request2", "response2")

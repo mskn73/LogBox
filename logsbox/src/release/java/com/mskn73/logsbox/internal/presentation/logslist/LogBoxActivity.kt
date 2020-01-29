@@ -25,7 +25,9 @@ internal class LogBoxActivity : AppCompatActivity() {
 
     companion object {
         fun newIntent(context: Context): Intent {
-            return Intent(context, LogBoxActivity::class.java)
+            return Intent(context, LogBoxActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
         }
     }
 }
