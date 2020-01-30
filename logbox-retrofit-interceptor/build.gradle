@@ -61,6 +61,7 @@ android.libraryVariants.all { variant ->
 dependencies {
     implementation libs.kotlin_stdlib
     implementation project(path: ':logsbox')
+    implementation("com.squareup.okhttp3:okhttp:4.3.1")
 
     testImplementation libs.junit_api
     testImplementation libs.kotlintest
