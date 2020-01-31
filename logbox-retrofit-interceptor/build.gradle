@@ -29,30 +29,17 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
-
-        buildConfigField "boolean", "NO_OP", "false"
     }
 
     buildTypes {
         noop {
-            minifyEnabled false
-            buildConfigField "boolean", "NO_OP", "true"
-            consumerProguardFiles 'proguard-rules.pro', 'proguard-noop.pro'
+            signingConfig signingConfigs.debug
+            debuggable true
         }
 
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    androidExtensions {
-        experimental = true
-    }
-
-    kapt {
-        arguments {
-            arg("room.schemaLocation", "$projectDir/schemas".toString())
         }
     }
 }
@@ -72,35 +59,14 @@ android.libraryVariants.all { variant ->
 }
 
 dependencies {
-    kapt libs.arch_comp_room_compiler
-    kaptTest libs.arch_comp_room_compiler
+    implementation project(path: ':logsbox')
 
-    implementation libs.arch_comp_extensions
-    implementation libs.arch_comp_livedata
-    implementation libs.arch_comp_viewmodel
-    implementation libs.arch_comp_viewmodel_ktx
-    implementation libs.arch_comp_room
-    implementation libs.arch_comp_room_ktx
-    implementation libs.design
-    implementation libs.gson
     implementation libs.kotlin_stdlib
-    implementation libs.seismic
+    implementation libs.okhttp3
 
-    testImplementation(libs.arch_comp_room_test) {
-        exclude module: 'junit'
-    }
-    testImplementation(libs.arch_comp_test) {
-        exclude module: 'junit'
-    }
     testImplementation libs.junit_api
     testImplementation libs.kotlintest
     testImplementation libs.mockito_kotlin
 
     testRuntimeOnly libs.junit_engine
-
-    androidTestImplementation libs.mockito_kotlin
-    androidTestImplementation(libs.barista) {
-        exclude group: 'com.android.support'
-        exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
-    }
 }
