@@ -18,11 +18,23 @@
             style="?logboxTitleText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:paddingEnd="48dp"
             android:ellipsize="start"
             android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/share"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="@dimen/lb_text_marginDivider"
+            android:padding="@dimen/lb_text_marginDivider"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title"
+            app:srcCompat="@drawable/ic_share" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/requestTitle"
@@ -69,9 +81,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/lb_text_marginDivider"
             android:layout_marginEnd="@dimen/lb_text_marginToBorder"
+            app:layout_constraintBottom_toBottomOf="@id/responseTitle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/responseTitle"
-            app:layout_constraintBottom_toBottomOf="@id/responseTitle"
             tools:text="201ms" />
 
         <androidx.appcompat.widget.AppCompatTextView

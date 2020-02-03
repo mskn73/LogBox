@@ -1,5 +1,6 @@
 package com.mskn73.logsbox.internal.presentation.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -52,6 +53,19 @@ internal class LogDetailFragment : Fragment() {
         } ?: run {
             requestTime.visibility = GONE
         }
+
+        share.setOnClickListener { shareLog(log) }
+    }
+
+    private fun shareLog(log: Log) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, log.toPrintable())
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     companion object {
