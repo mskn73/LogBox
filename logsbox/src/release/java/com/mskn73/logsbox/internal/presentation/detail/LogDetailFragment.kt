@@ -52,7 +52,6 @@ internal class LogDetailFragment : Fragment() {
         } ?: run {
             requestTime.visibility = GONE
         }
-
     }
 
     companion object {
