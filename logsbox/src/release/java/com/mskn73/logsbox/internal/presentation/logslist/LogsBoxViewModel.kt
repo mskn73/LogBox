@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mskn73.logsbox.internal.domain.GetRecordTypes
+import com.mskn73.logsbox.internal.domain.GetLogsTypes
 import kotlinx.coroutines.launch
 
-internal class LogsBoxViewModel(private val getRecordTypes: GetRecordTypes) : ViewModel() {
+internal class LogsBoxViewModel(private val getLogsTypes: GetLogsTypes) : ViewModel() {
 
     private val _types = MutableLiveData<List<String>>()
     val types: LiveData<List<String>>
@@ -19,7 +19,7 @@ internal class LogsBoxViewModel(private val getRecordTypes: GetRecordTypes) : Vi
 
     private fun loadTypes() {
         viewModelScope.launch {
-            _types.postValue(getRecordTypes())
+            _types.postValue(getLogsTypes())
         }
     }
 }

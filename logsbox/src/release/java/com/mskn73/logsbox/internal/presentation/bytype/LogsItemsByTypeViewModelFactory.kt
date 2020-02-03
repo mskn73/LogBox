@@ -12,7 +12,7 @@ class LogsItemsByTypeViewModelFactory(context: Context) : ViewModelProvider.Fact
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LogsItemsByTypeViewModel::class.java)) {
             return LogsItemsByTypeViewModel(
-                mainModule.providesGetRecordsByType()
+                mainModule.providesGetLogsByType()
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

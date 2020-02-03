@@ -15,9 +15,12 @@ object LogBox {
     fun log(
         type: String,
         title: String,
+        requestHeaders: List<String> = emptyList(),
         request: String,
-        response: String
+        responseHeaders: List<String> = emptyList(),
+        response: String,
+        responseTime: Long = -1
     ) {
-        LogBoxFactory.log(type, title, request, response)
+        LogBoxFactory.log(type, title, requestHeaders, request, responseHeaders, responseTime, response)
     }
 }

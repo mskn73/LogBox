@@ -1,14 +1,17 @@
 package com.mskn73.logsbox.internal.presentation.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 
 import com.mskn73.logsbox.R
-import com.mskn73.logsbox.internal.domain.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.android.synthetic.release.fragment_log_detail.*
+import java.lang.StringBuilder
 
 internal class LogDetailFragment : Fragment() {
 
@@ -23,24 +26,54 @@ internal class LogDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            (it.getSerializable(DeveloperRecord.KEY) as? DeveloperRecord)?.let { record ->
-                renderRecord(record)
+            (it.getSerializable(Log.KEY) as? Log)?.let { log ->
+                renderLog(log)
             }
         }
     }
 
-    private fun renderRecord(developerRecord: DeveloperRecord) {
-        title.text = developerRecord.title
-        request.text = developerRecord.request
-        response.text = developerRecord.response
+    private fun renderLog(log: Log) {
+        title.text = log.title
+        log.requestHeaders.fold(
+            StringBuilder(),
+            { acc, header -> acc.append(header).append("\n") }).toString()
+            .takeIf { it.isNotBlank() }?.let { headers ->
+                requestHeaders.text = headers
+            } ?: kotlin.run { requestHeaders.visibility = GONE }
+        request.text = log.requestBody
+        log.responseHeaders.fold(
+            StringBuilder(),
+            { acc, header -> acc.append(header).append("\n") }).toString()
+            .takeIf { it.isNotBlank() }?.let { headers ->
+                responseHeaders.text = headers
+            } ?: kotlin.run { responseHeaders.visibility = GONE }
+        response.text = log.responseBody
+        log.responseTime.takeIf { it > 0 }?.let {
+            requestTime.text = "$it ms"
+        } ?: run {
+            requestTime.visibility = GONE
+        }
+
+        share.setOnClickListener { shareLog(log) }
+    }
+
+    private fun shareLog(log: Log) {
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, log.toPrintable())
+            type = "text/plain"
+        }
+
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(logRecord: DeveloperRecord) =
+        fun newInstance(log: Log) =
             LogDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(DeveloperRecord.KEY, logRecord)
+                    putSerializable(Log.KEY, log)
                 }
             }
     }

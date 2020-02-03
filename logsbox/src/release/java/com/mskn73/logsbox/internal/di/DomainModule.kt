@@ -1,22 +1,22 @@
 package com.mskn73.logsbox.internal.di
 
-import com.mskn73.logsbox.internal.domain.AddRecord
-import com.mskn73.logsbox.internal.domain.GetRecordTypes
-import com.mskn73.logsbox.internal.domain.GetRecordsByType
+import com.mskn73.logsbox.internal.domain.AddLog
+import com.mskn73.logsbox.internal.domain.GetLogsTypes
+import com.mskn73.logsbox.internal.domain.GetLogsByType
 
 internal class DomainModule(private val databaseModule: DatabaseModule) {
-    fun provideAddRecord(): AddRecord =
-        AddRecord(
+    fun provideAddLog(): AddLog =
+        AddLog(
             databaseModule.providesRepository()
         )
 
-    fun providesGetRecordsByType(): GetRecordsByType =
-        GetRecordsByType(
+    fun providesGetLogsByType(): GetLogsByType =
+        GetLogsByType(
             databaseModule.providesRepository()
         )
 
-    fun providesGetTypes(): GetRecordTypes =
-        GetRecordTypes(
+    fun providesGetTypes(): GetLogsTypes =
+        GetLogsTypes(
             databaseModule.providesRepository()
         )
 }

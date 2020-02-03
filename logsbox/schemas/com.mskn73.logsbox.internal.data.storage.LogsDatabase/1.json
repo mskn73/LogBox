@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "885a5c82bc9a466b1b403c437d5a32a0",
+    "identityHash": "d40126d136467c7fac9b99f8f69ded80",
     "entities": [
       {
         "tableName": "logs",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `type` TEXT NOT NULL, `request_headers` TEXT NOT NULL, `request_body` TEXT NOT NULL, `response_headers` TEXT NOT NULL, `response_body` TEXT NOT NULL, `timeMillis` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `type` TEXT NOT NULL, `request_headers` TEXT NOT NULL, `request_body` TEXT NOT NULL, `response_headers` TEXT NOT NULL, `response_body` TEXT NOT NULL, `response_time` INTEGER NOT NULL, `timeMillis` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -51,6 +51,12 @@
             "notNull": true
           },
           {
+            "fieldPath": "responseTime",
+            "columnName": "response_time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "timeMillis",
             "columnName": "timeMillis",
             "affinity": "INTEGER",
@@ -70,7 +76,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '885a5c82bc9a466b1b403c437d5a32a0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd40126d136467c7fac9b99f8f69ded80')"
     ]
   }
 }

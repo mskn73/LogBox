@@ -1,6 +1,5 @@
 package com.mskn73.logbox_retrofit_interceptor
 
-import com.mskn73.logsbox.LogBox.log
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -81,8 +80,11 @@ class LogboxHttpLoggingInterceptor : Interceptor {
     interface Logger {
         fun log(
             title: String,
+            requestHeaders: String,
             request: String,
-            response: String
+            responseHeaders: String,
+            response: String,
+            responseTime: Long
         )
 
         companion object {
@@ -92,10 +94,13 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                     Logger {
                     override fun log(
                         title: String,
+                        requestHeaders: String,
                         request: String,
-                        response: String
+                        responseHeaders: String,
+                        response: String,
+                        responseTime: Long
                     ) {
-                        log("network", title, request, response)
+                        log(title, requestHeaders, request, responseHeaders, response, responseTime)
                     }
                 }
         }
@@ -124,8 +129,10 @@ class LogboxHttpLoggingInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val lbTitle = StringBuilder()
-        val lbRequest = StringBuilder()
-        val lbResponse = StringBuilder()
+        val lbRequestHeaders = StringBuilder()
+        val lbRequestBody = StringBuilder()
+        val lbResponseHeaders = StringBuilder()
+        val lbResponseBody = StringBuilder()
         val level =
             level
         val request = chain.request()
@@ -153,11 +160,11 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                 // Request body headers are only present when installed as a network interceptor. Force
                 // them to be included (when available) so there values are known.
                 if (requestBody.contentType() != null) {
-                    lbRequest.append("Content-Type: ").append(requestBody.contentType())
+                    lbRequestHeaders.append("Content-Type: ").append(requestBody.contentType())
                         .append("\n")
                 }
                 if (requestBody.contentLength() != -1L) {
-                    lbRequest.append("Content-Length: ").append(requestBody.contentLength())
+                    lbRequestHeaders.append("Content-Length: ").append(requestBody.contentLength())
                         .append("\n")
                 }
             }
@@ -171,16 +178,16 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                     !"Content-Type".equals(name, ignoreCase = true) &&
                     !"Content-Length".equals(name, ignoreCase = true)
                 ) {
-                    lbRequest.append(name).append(": ").append(headers.value(i)).append("\n")
+                    lbRequestHeaders.append(name).append(": ").append(headers.value(i)).append("\n")
                 }
                 i++
             }
             if (!logBody) {
                 requestBody?.let { _ ->
-                    lbRequest.append("--> END ").append(request.method).append("\n")
+                    lbRequestBody.append("--> END ").append(request.method).append("\n")
                 }
             } else if (bodyHasUnknownEncoding(request.headers)) {
-                lbRequest.append("--> END ").append(request.method)
+                lbRequestBody.append("--> END ").append(request.method)
                     .append(" (encoded body omitted)").append("\n")
             } else {
                 val buffer = Buffer()
@@ -189,13 +196,13 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                 requestBody?.contentType()?.let { contentType ->
                     charset = contentType.charset(UTF8) ?: UTF8
                 }
-                lbRequest.append("\n")
+                lbRequestBody.append("\n")
                 if (isPlaintext(buffer)) {
-                    lbRequest.append(buffer.readString(charset))
-                    lbRequest.append("--> END ").append(request.method).append(" (")
+                    lbRequestBody.append(buffer.readString(charset))
+                    lbRequestBody.append("--> END ").append(request.method).append(" (")
                         .append(requestBody?.contentLength()).append("-byte body)")
                 } else {
-                    lbRequest.append(
+                    lbRequestBody.append(
                         "--> END " + request.method + " (binary " +
                                 requestBody?.contentLength() + "-byte body omitted)"
                     )
@@ -207,16 +214,16 @@ class LogboxHttpLoggingInterceptor : Interceptor {
         response = try {
             chain.proceed(request)
         } catch (e: Exception) {
-            lbRequest.append("<-- HTTP FAILED: ").append(e)
-            logger.log(lbTitle.toString(), lbResponse.toString(), e.message ?: "HTTP FAILED")
+            lbRequestBody.append("<-- HTTP FAILED: ").append(e)
+            logger.log(lbTitle.toString(), lbRequestHeaders.toString(), lbResponseBody.toString(), lbResponseHeaders.toString(), e.message ?: "HTTP FAILED", -1)
             throw e
         }
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
-        lbTitle.append(" | ").append(request.url).append(" (").append(tookMs).append(" ms)")
+        // lbTitle.append(" | ").append(request.url).append(" (").append(tookMs).append(" ms)")
         val responseBody = response.body
         val contentLength = responseBody?.contentLength()
         val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
-        lbResponse.append("<-- ").append(response.code)
+        lbResponseBody.append("<-- ").append(response.code)
             .append(if (response.message.isEmpty()) "" else ' '.toString() + response.message)
             .append(' ').append(response.request.url).append(" (").append(tookMs).append("ms")
             .append(if (!logHeaders) ", $bodySize body" else "").append(')')
@@ -225,14 +232,14 @@ class LogboxHttpLoggingInterceptor : Interceptor {
             var i = 0
             val count = headers.size
             while (i < count) {
-                lbResponse.append(headers.name(i)).append(": ").append(headers.value(i))
+                lbResponseHeaders.append(headers.name(i)).append(": ").append(headers.value(i))
                     .append("\n")
                 i++
             }
             if (!logBody || !response.promisesBody()) {
-                lbResponse.append("<-- END HTTP")
+                lbResponseBody.append("<-- END HTTP")
             } else if (bodyHasUnknownEncoding(response.headers)) {
-                lbResponse.append("<-- END HTTP (encoded body omitted)")
+                lbResponseBody.append("<-- END HTTP (encoded body omitted)")
             } else {
                 responseBody?.let { responseBody ->
                     val source = responseBody.source()
@@ -257,27 +264,27 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                     }
 
                     if (!isPlaintext(buffer)) {
-                        lbResponse.append("\n")
-                        lbResponse.append("<-- END HTTP (binary ").append(buffer.size)
+                        lbResponseBody.append("\n")
+                        lbResponseBody.append("<-- END HTTP (binary ").append(buffer.size)
                             .append("-byte body omitted)")
-                        logger.log(lbTitle.toString(), lbRequest.toString(), lbResponse.toString())
+                        logger.log(lbTitle.toString(), lbRequestHeaders.toString(), lbRequestBody.toString(), lbResponseHeaders.toString(), lbResponseBody.toString(), tookMs)
                         return response
                     }
                     if (contentLength != 0L) {
-                        lbResponse.append("\n")
-                        lbResponse.append(buffer.clone().readString(charset))
+                        lbResponseBody.append("\n")
+                        lbResponseBody.append(buffer.clone().readString(charset))
                     }
                     if (gzippedLength != null) {
-                        lbResponse.append("<-- END HTTP (").append(buffer.size).append("-byte, ")
+                        lbResponseBody.append("<-- END HTTP (").append(buffer.size).append("-byte, ")
                             .append(gzippedLength).append("-gzipped-byte body)")
                     } else {
-                        lbResponse.append("<-- END HTTP (").append(buffer.size)
+                        lbResponseBody.append("<-- END HTTP (").append(buffer.size)
                             .append("-byte body)")
                     }
-                } ?: lbResponse.append("<-- END HTTP (no body)")
+                } ?: lbResponseBody.append("<-- END HTTP (no body)")
             }
         }
-        logger.log(lbTitle.toString(), lbRequest.toString(), lbResponse.toString())
+        logger.log(lbTitle.toString(), lbRequestHeaders.toString(), lbRequestBody.toString(), lbResponseHeaders.toString(), lbResponseBody.toString(), tookMs)
         return response
     }
 
