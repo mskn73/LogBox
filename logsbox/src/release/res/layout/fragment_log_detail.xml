@@ -27,6 +27,12 @@
             android:text="Request"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/requestHeaders"
+            style="?logboxLogText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/request"
             style="?logboxLogText"
             android:layout_width="match_parent"
@@ -37,6 +43,12 @@
             android:layout_height="wrap_content"
             android:text="@string/response_title"
             style="?logboxNameText"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/responseHeaders"
+            style="?logboxLogText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/response"

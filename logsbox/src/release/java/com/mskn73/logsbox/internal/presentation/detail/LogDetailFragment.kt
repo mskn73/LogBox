@@ -4,11 +4,13 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 
 import com.mskn73.logsbox.R
 import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.android.synthetic.release.fragment_log_detail.*
+import java.lang.StringBuilder
 
 internal class LogDetailFragment : Fragment() {
 
@@ -31,7 +33,15 @@ internal class LogDetailFragment : Fragment() {
 
     private fun renderLog(log: Log) {
         title.text = log.title
+        log.requestHeaders.fold(StringBuilder(), { acc, header -> acc.append(header).append("\n") }).toString()
+            .takeIf { it.isNotBlank() }?.let { headers->
+                requestHeaders.text = headers
+            }?: kotlin.run { requestHeaders.visibility = GONE }
         request.text = log.requestBody
+        log.responseHeaders.fold(StringBuilder(), { acc, header -> acc.append(header).append("\n") }).toString()
+            .takeIf { it.isNotBlank() }?.let { headers->
+                responseHeaders.text = headers
+            }?: kotlin.run { responseHeaders.visibility = GONE }
         response.text = log.responseBody
     }
 
