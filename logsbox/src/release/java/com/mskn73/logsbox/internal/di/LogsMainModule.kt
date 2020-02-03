@@ -1,8 +1,8 @@
 package com.mskn73.logsbox.internal.di
 
 import android.content.Context
-import com.mskn73.logsbox.internal.domain.AddRecord
-import com.mskn73.logsbox.internal.domain.GetRecordTypes
+import com.mskn73.logsbox.internal.domain.AddLog
+import com.mskn73.logsbox.internal.domain.GetLogsTypes
 import com.mskn73.logsbox.internal.domain.GetLogsByType
 
 internal class LogsMainModule(context: Context) {
@@ -10,9 +10,9 @@ internal class LogsMainModule(context: Context) {
     private val databaseModule = DatabaseModule(context)
     private val domainModule = DomainModule(databaseModule)
 
-    fun provideAddRecord(): AddRecord = domainModule.provideAddRecord()
+    fun provideAddLog(): AddLog = domainModule.provideAddLog()
 
-    fun providesGetRecordsByType(): GetLogsByType = domainModule.providesGetRecordsByType()
+    fun providesGetLogsByType(): GetLogsByType = domainModule.providesGetLogsByType()
 
-    fun providesGetTypes(): GetRecordTypes = domainModule.providesGetTypes()
+    fun providesGetTypes(): GetLogsTypes = domainModule.providesGetTypes()
 }

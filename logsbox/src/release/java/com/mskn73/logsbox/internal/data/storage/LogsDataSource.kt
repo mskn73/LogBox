@@ -6,21 +6,21 @@ import com.mskn73.logsbox.internal.LogsDispatcher
 import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.coroutines.withContext
 
-internal class RecordsDataSource(private val database: RecordsDatabase) {
+internal class LogsDataSource(private val database: LogsDatabase) {
     private val gson = GsonBuilder()
         .setPrettyPrinting()
         .create()
 
     suspend fun getTypes(): List<String> = withContext(LogsDispatcher.io) {
-        database.recordDao().getTypes()
+        database.logsDao().getTypes()
     }
 
     suspend fun getAllByType(type: String): List<Log> = withContext(LogsDispatcher.io) {
-        database.recordDao().getAllByType(type).toDomain()
+        database.logsDao().getAllByType(type).toDomain()
     }
 
     suspend fun save(log: Log) = withContext(LogsDispatcher.io) {
-        database.recordDao().insert(
+        database.logsDao().insert(
             with(log) {
                 LogEntity(
                     title = title,

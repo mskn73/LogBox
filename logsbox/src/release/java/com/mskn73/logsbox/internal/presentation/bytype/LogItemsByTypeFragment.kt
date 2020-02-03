@@ -42,14 +42,14 @@ internal class LogItemsByTypeFragment : Fragment() {
 
     private fun configureRecyclerView() {
         val dividerItemDecoration = DividerItemDecoration(
-            recordsList.getContext(),
+            logsList.getContext(),
             DividerItemDecoration.VERTICAL
         )
-        recordsList.addItemDecoration(dividerItemDecoration)
+        logsList.addItemDecoration(dividerItemDecoration)
     }
 
     private fun handleLogs(logs: List<Log>) {
-        with(recordsList) {
+        with(logsList) {
             adapter =
                 LogsItemByTypeRecyclerViewAdapter(
                     logs

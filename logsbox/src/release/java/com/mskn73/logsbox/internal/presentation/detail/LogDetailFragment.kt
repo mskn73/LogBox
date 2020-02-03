@@ -23,13 +23,13 @@ internal class LogDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            (it.getSerializable(Log.KEY) as? Log)?.let { record ->
-                renderRecord(record)
+            (it.getSerializable(Log.KEY) as? Log)?.let { log ->
+                renderLog(log)
             }
         }
     }
 
-    private fun renderRecord(log: Log) {
+    private fun renderLog(log: Log) {
         title.text = log.title
         request.text = log.requestBody
         response.text = log.responseBody
@@ -37,10 +37,10 @@ internal class LogDetailFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(logRecord: Log) =
+        fun newInstance(log: Log) =
             LogDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(Log.KEY, logRecord)
+                    putSerializable(Log.KEY, log)
                 }
             }
     }

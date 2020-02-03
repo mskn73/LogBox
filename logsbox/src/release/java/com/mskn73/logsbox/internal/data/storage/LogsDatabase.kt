@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 
 @Database(entities = arrayOf(LogEntity::class), version = 1)
 @TypeConverters(Converters::class)
-internal abstract class RecordsDatabase : RoomDatabase() {
+internal abstract class LogsDatabase : RoomDatabase() {
 
-    abstract fun recordDao(): RecordsDao
+    abstract fun logsDao(): LogsDao
 }

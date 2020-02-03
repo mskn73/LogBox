@@ -18,9 +18,9 @@ internal class LogDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun goToDetail(record: Log) {
+    private fun goToDetail(log: Log) {
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.detailContainer, LogDetailFragment.newInstance(record))
+            replace(R.id.detailContainer, LogDetailFragment.newInstance(log))
             commit()
         }
     }

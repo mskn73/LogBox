@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-internal interface RecordsDao {
+internal interface LogsDao {
     @Query("SELECT * FROM logs WHERE type = :type ORDER BY timeMillis DESC")
     suspend fun getAllByType(type: String): List<LogEntity>
 
@@ -13,5 +13,5 @@ internal interface RecordsDao {
     suspend fun getTypes(): List<String>
 
     @Insert
-    suspend fun insert(vararg records: LogEntity)
+    suspend fun insert(vararg logs: LogEntity)
 }

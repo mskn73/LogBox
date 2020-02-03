@@ -13,6 +13,6 @@ internal data class Log(
     val timeMillis: Long = System.currentTimeMillis()
 ) : Serializable {
     companion object {
-        const val KEY = "DeveloperRecord"
+        const val KEY = "log-key"
     }
 }
