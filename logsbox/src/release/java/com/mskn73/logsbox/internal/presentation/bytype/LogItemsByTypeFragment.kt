@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.mskn73.logsbox.R
-import com.mskn73.logsbox.internal.domain.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.Log
 import com.mskn73.logsbox.internal.presentation.detail.LogDetailActivity
 import kotlinx.android.synthetic.release.fragment_logitem_list.*
 
@@ -48,7 +48,7 @@ internal class LogItemsByTypeFragment : Fragment() {
         recordsList.addItemDecoration(dividerItemDecoration)
     }
 
-    private fun handleLogs(logs: List<DeveloperRecord>) {
+    private fun handleLogs(logs: List<Log>) {
         with(recordsList) {
             adapter =
                 LogsItemByTypeRecyclerViewAdapter(
@@ -59,8 +59,8 @@ internal class LogItemsByTypeFragment : Fragment() {
         }
     }
 
-    private fun goToDetail(developerRecord: DeveloperRecord) {
-        context?.let { startActivity(LogDetailActivity.newIntent(it, developerRecord)) }
+    private fun goToDetail(log: Log) {
+        context?.let { startActivity(LogDetailActivity.newIntent(it, log)) }
     }
 
     companion object {

@@ -15,7 +15,10 @@ object LogBoxFactory {
     fun log(
         type: String,
         title: String,
+        requestHeaders: List<String> = emptyList(),
         request: String,
+        responseHeaders: List<String> = emptyList(),
+        responseTime: Long = -1,
         response: String
     ) {
         // no-op

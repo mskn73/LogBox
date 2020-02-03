@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.mskn73.logsbox.R
-import com.mskn73.logsbox.internal.domain.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.Log
 
 internal class LogDetailActivity : AppCompatActivity() {
 
@@ -13,12 +13,12 @@ internal class LogDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_log_detail)
 
-        (intent.extras?.getSerializable(DeveloperRecord.KEY) as? DeveloperRecord)?.let {
+        (intent.extras?.getSerializable(Log.KEY) as? Log)?.let {
             goToDetail(it)
         }
     }
 
-    private fun goToDetail(record: DeveloperRecord) {
+    private fun goToDetail(record: Log) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.detailContainer, LogDetailFragment.newInstance(record))
             commit()
@@ -26,9 +26,9 @@ internal class LogDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        fun newIntent(context: Context, developerRecord: DeveloperRecord): Intent {
+        fun newIntent(context: Context, log: Log): Intent {
             return Intent(context, LogDetailActivity::class.java).apply {
-                putExtra(DeveloperRecord.KEY, developerRecord)
+                putExtra(Log.KEY, log)
             }
         }
     }

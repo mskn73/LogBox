@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.mskn73.logsbox.R
-import com.mskn73.logsbox.internal.domain.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.android.synthetic.release.fragment_log_detail.*
 
 internal class LogDetailFragment : Fragment() {
@@ -23,24 +23,24 @@ internal class LogDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            (it.getSerializable(DeveloperRecord.KEY) as? DeveloperRecord)?.let { record ->
+            (it.getSerializable(Log.KEY) as? Log)?.let { record ->
                 renderRecord(record)
             }
         }
     }
 
-    private fun renderRecord(developerRecord: DeveloperRecord) {
-        title.text = developerRecord.title
-        request.text = developerRecord.request
-        response.text = developerRecord.response
+    private fun renderRecord(log: Log) {
+        title.text = log.title
+        request.text = log.requestBody
+        response.text = log.responseBody
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(logRecord: DeveloperRecord) =
+        fun newInstance(logRecord: Log) =
             LogDetailFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(DeveloperRecord.KEY, logRecord)
+                    putSerializable(Log.KEY, logRecord)
                 }
             }
     }

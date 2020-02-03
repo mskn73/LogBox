@@ -2,10 +2,10 @@ package com.mskn73.logsbox.internal.di
 
 import android.content.Context
 import androidx.room.Room
-import com.mskn73.logsbox.internal.data.RecordsDataRepository
+import com.mskn73.logsbox.internal.data.LogsDataRepository
 import com.mskn73.logsbox.internal.data.storage.RecordsDataSource
 import com.mskn73.logsbox.internal.data.storage.RecordsDatabase
-import com.mskn73.logsbox.internal.domain.RecordsRepository
+import com.mskn73.logsbox.internal.domain.LogsRepository
 
 internal class DatabaseModule(
     private val applicationContext: Context,
@@ -19,7 +19,7 @@ internal class DatabaseModule(
         providesDatabase()
     )
 
-    fun providesRepository(): RecordsRepository = RecordsDataRepository(
+    fun providesRepository(): LogsRepository = LogsDataRepository(
         providesRecordsDataSource()
     )
 }

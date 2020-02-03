@@ -3,7 +3,7 @@ package com.mskn73.logsbox.internal.data.storage
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
 import com.mskn73.logsbox.internal.LogsDispatcher
-import com.mskn73.logsbox.internal.domain.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.coroutines.withContext
 
 internal class RecordsDataSource(private val database: RecordsDatabase) {
@@ -15,18 +15,20 @@ internal class RecordsDataSource(private val database: RecordsDatabase) {
         database.recordDao().getTypes()
     }
 
-    suspend fun getAllByType(type: String): List<DeveloperRecord> = withContext(LogsDispatcher.io) {
+    suspend fun getAllByType(type: String): List<Log> = withContext(LogsDispatcher.io) {
         database.recordDao().getAllByType(type).toDomain()
     }
 
-    suspend fun save(developerRecord: DeveloperRecord) = withContext(LogsDispatcher.io) {
+    suspend fun save(log: Log) = withContext(LogsDispatcher.io) {
         database.recordDao().insert(
-            with(developerRecord) {
-                DeveloperRecordEntity(
+            with(log) {
+                LogEntity(
                     title = title,
                     type = type,
-                    request = formatAsPrettyJson(request),
-                    response = formatAsPrettyJson(response),
+                    requestHeaders = requestHeaders,
+                    requestBody = formatAsPrettyJson(requestBody),
+                    responseHeaders = responseHeaders,
+                    responseBody = formatAsPrettyJson(responseBody),
                     timeMillis = timeMillis
                 )
             }

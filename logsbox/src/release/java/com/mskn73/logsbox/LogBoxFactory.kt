@@ -3,11 +3,10 @@ package com.mskn73.logsbox
 import android.content.Context
 import android.content.Context.SENSOR_SERVICE
 import android.hardware.SensorManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.mskn73.logsbox.internal.di.LogsMainModule
 import com.mskn73.logsbox.internal.domain.AddRecord
-import com.mskn73.logsbox.internal.domain.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.Log
 import com.mskn73.logsbox.internal.presentation.logslist.LogBoxActivity
 import com.mskn73.logsbox.internal.presentation.logslist.LogsBoxFragment
 import com.squareup.seismic.ShakeDetector
@@ -39,17 +38,23 @@ object LogBoxFactory {
     fun log(
         type: String,
         title: String,
+        requestHeaders: List<String>,
         request: String,
+        responseHeaders: List<String>,
+        responseTime: Long,
         response: String
     ) {
         addRecord?.let { addRecord ->
             GlobalScope.launch {
                 addRecord(
-                    DeveloperRecord(
-                        title,
-                        type,
-                        request,
-                        response
+                    Log(
+                        title = title,
+                        type = type,
+                        requestHeaders = requestHeaders,
+                        requestBody = request,
+                        responseHeaders = responseHeaders,
+                        responseBody = response,
+                        responseTime = responseTime
                     )
                 )
             }

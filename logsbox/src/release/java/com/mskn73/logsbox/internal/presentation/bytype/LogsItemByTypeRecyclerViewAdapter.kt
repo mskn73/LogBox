@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.mskn73.logsbox.R
-import com.mskn73.logsbox.internal.domain.DeveloperRecord
+import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.android.synthetic.release.fragment_logitem.view.*
 
 import java.text.DateFormat.SHORT
 import java.text.SimpleDateFormat
 
 internal class LogsItemByTypeRecyclerViewAdapter(
-    private val mValues: List<DeveloperRecord>,
-    private val mListener: (DeveloperRecord) -> Unit
+    private val mValues: List<Log>,
+    private val mListener: (Log) -> Unit
 ) : RecyclerView.Adapter<LogsItemByTypeRecyclerViewAdapter.ViewHolder>() {
 
     private val mOnClickListener: View.OnClickListener
@@ -22,7 +22,7 @@ internal class LogsItemByTypeRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DeveloperRecord
+            val item = v.tag as Log
 
             mListener(item)
         }

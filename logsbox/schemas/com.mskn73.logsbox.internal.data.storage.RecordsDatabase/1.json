@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "0740ed1b2edcfe1e159958e0e2a91852",
+    "identityHash": "885a5c82bc9a466b1b403c437d5a32a0",
     "entities": [
       {
-        "tableName": "records",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `type` TEXT NOT NULL, `request` TEXT NOT NULL, `response` TEXT NOT NULL, `timeMillis` INTEGER NOT NULL)",
+        "tableName": "logs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `title` TEXT NOT NULL, `type` TEXT NOT NULL, `request_headers` TEXT NOT NULL, `request_body` TEXT NOT NULL, `response_headers` TEXT NOT NULL, `response_body` TEXT NOT NULL, `timeMillis` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -27,14 +27,26 @@
             "notNull": true
           },
           {
-            "fieldPath": "request",
-            "columnName": "request",
+            "fieldPath": "requestHeaders",
+            "columnName": "request_headers",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "response",
-            "columnName": "response",
+            "fieldPath": "requestBody",
+            "columnName": "request_body",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "responseHeaders",
+            "columnName": "response_headers",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "responseBody",
+            "columnName": "response_body",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -58,7 +70,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0740ed1b2edcfe1e159958e0e2a91852')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '885a5c82bc9a466b1b403c437d5a32a0')"
     ]
   }
 }
