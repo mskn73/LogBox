@@ -34,6 +34,7 @@ internal class LogsDataSource(private val database: LogsDatabase) {
                 )
             }
         )
+        database.logsDao().deleteLastElements(20)
     }
 
     private fun formatAsPrettyJson(text: String) = try {
