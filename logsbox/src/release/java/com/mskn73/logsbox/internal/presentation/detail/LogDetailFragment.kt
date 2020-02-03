@@ -34,14 +34,14 @@ internal class LogDetailFragment : Fragment() {
     private fun renderLog(log: Log) {
         title.text = log.title
         log.requestHeaders.fold(StringBuilder(), { acc, header -> acc.append(header).append("\n") }).toString()
-            .takeIf { it.isNotBlank() }?.let { headers->
+            .takeIf { it.isNotBlank() }?.let { headers ->
                 requestHeaders.text = headers
-            }?: kotlin.run { requestHeaders.visibility = GONE }
+            } ?: kotlin.run { requestHeaders.visibility = GONE }
         request.text = log.requestBody
         log.responseHeaders.fold(StringBuilder(), { acc, header -> acc.append(header).append("\n") }).toString()
-            .takeIf { it.isNotBlank() }?.let { headers->
+            .takeIf { it.isNotBlank() }?.let { headers ->
                 responseHeaders.text = headers
-            }?: kotlin.run { responseHeaders.visibility = GONE }
+            } ?: kotlin.run { responseHeaders.visibility = GONE }
         response.text = log.responseBody
     }
 
