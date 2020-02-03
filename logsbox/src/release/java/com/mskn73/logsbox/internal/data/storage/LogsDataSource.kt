@@ -29,7 +29,8 @@ internal class LogsDataSource(private val database: LogsDatabase) {
                     requestBody = formatAsPrettyJson(requestBody),
                     responseHeaders = responseHeaders,
                     responseBody = formatAsPrettyJson(responseBody),
-                    timeMillis = timeMillis
+                    timeMillis = timeMillis,
+                    responseTime = responseTime
                 )
             }
         )

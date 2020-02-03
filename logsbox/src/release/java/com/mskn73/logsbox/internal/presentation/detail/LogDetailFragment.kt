@@ -33,16 +33,26 @@ internal class LogDetailFragment : Fragment() {
 
     private fun renderLog(log: Log) {
         title.text = log.title
-        log.requestHeaders.fold(StringBuilder(), { acc, header -> acc.append(header).append("\n") }).toString()
+        log.requestHeaders.fold(
+            StringBuilder(),
+            { acc, header -> acc.append(header).append("\n") }).toString()
             .takeIf { it.isNotBlank() }?.let { headers ->
                 requestHeaders.text = headers
             } ?: kotlin.run { requestHeaders.visibility = GONE }
         request.text = log.requestBody
-        log.responseHeaders.fold(StringBuilder(), { acc, header -> acc.append(header).append("\n") }).toString()
+        log.responseHeaders.fold(
+            StringBuilder(),
+            { acc, header -> acc.append(header).append("\n") }).toString()
             .takeIf { it.isNotBlank() }?.let { headers ->
                 responseHeaders.text = headers
             } ?: kotlin.run { responseHeaders.visibility = GONE }
         response.text = log.responseBody
+        log.responseTime.takeIf { it > 0 }?.let {
+            requestTime.text = "$it ms"
+        } ?: run {
+            requestTime.visibility = GONE
+        }
+
     }
 
     companion object {

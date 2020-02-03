@@ -14,10 +14,11 @@ internal data class LogEntity(
     @ColumnInfo(name = "request_body") val requestBody: String,
     @ColumnInfo(name = "response_headers") val responseHeaders: List<String>,
     @ColumnInfo(name = "response_body") val responseBody: String,
+    @ColumnInfo(name = "response_time") val responseTime: Long,
     @ColumnInfo(name = "timeMillis") val timeMillis: Long = System.currentTimeMillis()
 ) {
 
-    fun toDomain(): Log = Log(title, type, requestHeaders, requestBody, responseHeaders, responseBody)
+    fun toDomain(): Log = Log(title, type, requestHeaders, requestBody, responseHeaders, responseBody, responseTime, timeMillis)
 }
 
 internal fun List<LogEntity>.toDomain(): List<Log> = map { it.toDomain() }
