@@ -14,4 +14,7 @@ internal interface LogsDao {
 
     @Insert
     suspend fun insert(vararg logs: LogEntity)
+
+    @Query("DELETE FROM logs WHERE id NOT IN (SELECT id from logs ORDER BY id DESC LIMIT :elementsNumber)")
+    fun deleteLastElements(elementsNumber: Int)
 }
