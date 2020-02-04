@@ -59,7 +59,7 @@ android.libraryVariants.all { variant ->
 }
 
 dependencies {
-    implementation project(path: ':logsbox')
+    api project(path: ':logsbox')
 
     implementation libs.kotlin_stdlib
     implementation libs.okhttp3
