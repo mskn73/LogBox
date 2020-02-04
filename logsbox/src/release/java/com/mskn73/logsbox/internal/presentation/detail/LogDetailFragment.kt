@@ -9,6 +9,7 @@ import android.view.View.GONE
 import android.view.ViewGroup
 
 import com.mskn73.logsbox.R
+import com.mskn73.logsbox.internal.Utils
 import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.android.synthetic.release.fragment_log_detail.*
 import java.lang.StringBuilder
@@ -40,14 +41,14 @@ internal class LogDetailFragment : Fragment() {
             .takeIf { it.isNotBlank() }?.let { headers ->
                 requestHeaders.text = headers
             } ?: kotlin.run { requestHeaders.visibility = GONE }
-        request.text = log.requestBody
+        request.text = Utils.formatAsPrettyJson(log.requestBody)
         log.responseHeaders.fold(
             StringBuilder(),
             { acc, header -> acc.append(header).append("\n") }).toString()
             .takeIf { it.isNotBlank() }?.let { headers ->
                 responseHeaders.text = headers
             } ?: kotlin.run { responseHeaders.visibility = GONE }
-        response.text = log.responseBody
+        response.text = Utils.formatAsPrettyJson(log.responseBody)
         log.responseTime.takeIf { it > 0 }?.let {
             requestTime.text = "$it ms"
         } ?: run {

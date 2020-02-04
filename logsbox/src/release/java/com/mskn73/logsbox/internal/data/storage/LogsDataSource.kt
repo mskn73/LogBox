@@ -7,9 +7,7 @@ import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.coroutines.withContext
 
 internal class LogsDataSource(private val database: LogsDatabase) {
-    private val gson = GsonBuilder()
-        .setPrettyPrinting()
-        .create()
+
 
     suspend fun getTypes(): List<String> = withContext(LogsDispatcher.io) {
         database.logsDao().getTypes()
@@ -26,20 +24,14 @@ internal class LogsDataSource(private val database: LogsDatabase) {
                     title = title,
                     type = type,
                     requestHeaders = requestHeaders,
-                    requestBody = formatAsPrettyJson(requestBody),
+                    requestBody = requestBody,
                     responseHeaders = responseHeaders,
-                    responseBody = formatAsPrettyJson(responseBody),
+                    responseBody = responseBody,
                     timeMillis = timeMillis,
                     responseTime = responseTime
                 )
             }
         )
         database.logsDao().deleteLastElements(20)
-    }
-
-    private fun formatAsPrettyJson(text: String) = try {
-        gson.toJson(JsonParser.parseString(text).getAsJsonObject())
-    } catch (e: Exception) {
-        text
     }
 }
