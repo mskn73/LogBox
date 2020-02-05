@@ -9,14 +9,16 @@ import com.mskn73.logsbox.internal.domain.LogsRepository
 
 internal class DatabaseModule(
     private val applicationContext: Context,
-    private val databaseName: String = "logs-database"
+    private val databaseName: String,
+    private val maxRows: Int
 ) {
 
     private fun providesDatabase(): LogsDatabase =
         Room.databaseBuilder(applicationContext, LogsDatabase::class.java, databaseName).build()
 
     private fun providesLogsDataSource(): LogsDataSource = LogsDataSource(
-        providesDatabase()
+        providesDatabase(),
+        maxRows
     )
 
     fun providesRepository(): LogsRepository = LogsDataRepository(

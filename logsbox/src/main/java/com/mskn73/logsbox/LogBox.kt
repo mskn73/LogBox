@@ -8,7 +8,7 @@ object LogBox {
         LogBoxFactory.openLogs(context)
     }
 
-    fun init(context: Context, databaseName: String = "log-box.db", shakeDetection: Boolean = false) {
+    fun init(context: Context, databaseName: String = "log-box.db", shakeDetection: Boolean = false, maxRows: Int=1000) {
         LogBoxFactory.init(context, databaseName, shakeDetection)
     }
 
