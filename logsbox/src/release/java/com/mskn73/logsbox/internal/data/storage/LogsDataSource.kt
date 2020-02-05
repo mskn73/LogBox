@@ -1,13 +1,10 @@
 package com.mskn73.logsbox.internal.data.storage
 
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParser
 import com.mskn73.logsbox.internal.LogsDispatcher
 import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.coroutines.withContext
 
 internal class LogsDataSource(private val database: LogsDatabase) {
-
 
     suspend fun getTypes(): List<String> = withContext(LogsDispatcher.io) {
         database.logsDao().getTypes()

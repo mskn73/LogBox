@@ -101,7 +101,7 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                         response: String,
                         responseTime: Long
                     ) {
-                        LogBox.log("network",title, requestHeaders, request, responseHeaders, response, responseTime)
+                        LogBox.log("network", title, requestHeaders, request, responseHeaders, response, responseTime)
                     }
                 }
         }
