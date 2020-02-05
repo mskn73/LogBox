@@ -12,7 +12,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        LogBox.init(applicationContext, shakeDetection = true, maxRows = 2000)
+        LogBox.init(applicationContext, databaseName = "logsbox.db", shakeDetection = true, maxRows = 2000)
 
         for (i in 1..20) {
             LogBox.log(
