@@ -1,6 +1,8 @@
 # LogsBox
 LogBox stores logs for developer purposes.
 
+![LogBox example view](https://raw.githubusercontent.com/mskn73/LogBox/feat/add-dependencies-to-readme/design/logbox.gif)
+
 ## Usage
 You need to initialize the library with:
 `LogBox.init(application)`
