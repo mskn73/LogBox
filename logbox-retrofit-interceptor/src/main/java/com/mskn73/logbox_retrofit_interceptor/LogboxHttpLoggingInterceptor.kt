@@ -1,5 +1,6 @@
 package com.mskn73.logbox_retrofit_interceptor
 
+import com.mskn73.logsbox.LogBox
 import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -80,9 +81,9 @@ class LogboxHttpLoggingInterceptor : Interceptor {
     interface Logger {
         fun log(
             title: String,
-            requestHeaders: String,
+            requestHeaders: List<String>,
             request: String,
-            responseHeaders: String,
+            responseHeaders: List<String>,
             response: String,
             responseTime: Long
         )
@@ -94,13 +95,13 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                     Logger {
                     override fun log(
                         title: String,
-                        requestHeaders: String,
+                        requestHeaders: List<String>,
                         request: String,
-                        responseHeaders: String,
+                        responseHeaders: List<String>,
                         response: String,
                         responseTime: Long
                     ) {
-                        log(title, requestHeaders, request, responseHeaders, response, responseTime)
+                        LogBox.log("network", title, requestHeaders, request, responseHeaders, response, responseTime)
                     }
                 }
         }
@@ -117,7 +118,7 @@ class LogboxHttpLoggingInterceptor : Interceptor {
     private val logger: Logger
     @Volatile
     var level =
-        Level.NONE
+        Level.BODY
         private set
 
     /** Change the level at which this interceptor logs.  */
@@ -129,9 +130,9 @@ class LogboxHttpLoggingInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val lbTitle = StringBuilder()
-        val lbRequestHeaders = StringBuilder()
+        val lbRequestHeaders = mutableListOf<String>()
         val lbRequestBody = StringBuilder()
-        val lbResponseHeaders = StringBuilder()
+        val lbResponseHeaders = mutableListOf<String>()
         val lbResponseBody = StringBuilder()
         val level =
             level
@@ -139,13 +140,11 @@ class LogboxHttpLoggingInterceptor : Interceptor {
         if (level == Level.NONE) {
             return chain.proceed(request)
         }
-        val logBody =
-            level == Level.BODY
-        val logHeaders =
-            logBody || level == Level.HEADERS
+        val logBody = level == Level.BODY
+        val logHeaders = logBody || level == Level.HEADERS
         val requestBody = request.body
         val connection = chain.connection()
-        var requestStartMessage = ("--> " +
+        var requestStartMessage = (
                 request.method +
                 ' ' + request.url +
                 if (connection != null) " " + connection.protocol() else "")
@@ -160,12 +159,10 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                 // Request body headers are only present when installed as a network interceptor. Force
                 // them to be included (when available) so there values are known.
                 if (requestBody.contentType() != null) {
-                    lbRequestHeaders.append("Content-Type: ").append(requestBody.contentType())
-                        .append("\n")
+                    lbRequestHeaders.add("Content-Type: ${requestBody.contentType()}")
                 }
                 if (requestBody.contentLength() != -1L) {
-                    lbRequestHeaders.append("Content-Length: ").append(requestBody.contentLength())
-                        .append("\n")
+                    lbRequestHeaders.add("Content-Length: ${requestBody.contentLength()}")
                 }
             }
             val headers = request.headers
@@ -178,17 +175,17 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                     !"Content-Type".equals(name, ignoreCase = true) &&
                     !"Content-Length".equals(name, ignoreCase = true)
                 ) {
-                    lbRequestHeaders.append(name).append(": ").append(headers.value(i)).append("\n")
+                    lbRequestHeaders.add("$name: ${headers.value(i)}")
                 }
                 i++
             }
             if (!logBody) {
                 requestBody?.let { _ ->
-                    lbRequestBody.append("--> END ").append(request.method).append("\n")
+                    lbRequestBody.append("(body not logged)").append(request.method).append("\n")
                 }
             } else if (bodyHasUnknownEncoding(request.headers)) {
-                lbRequestBody.append("--> END ").append(request.method)
-                    .append(" (encoded body omitted)").append("\n")
+                lbRequestBody.append(request.method)
+                    .append("(bodyHasUnknownEncoding - encoded body omitted)").append("\n")
             } else {
                 val buffer = Buffer()
                 requestBody?.writeTo(buffer)
@@ -196,15 +193,13 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                 requestBody?.contentType()?.let { contentType ->
                     charset = contentType.charset(UTF8) ?: UTF8
                 }
-                lbRequestBody.append("\n")
                 if (isPlaintext(buffer)) {
                     lbRequestBody.append(buffer.readString(charset))
-                    lbRequestBody.append("--> END ").append(request.method).append(" (")
-                        .append(requestBody?.contentLength()).append("-byte body)")
+//                    lbRequestBody.append("--> END ").append(request.method).append(" (")
+//                        .append(requestBody?.contentLength()).append("-byte body)")
                 } else {
                     lbRequestBody.append(
-                        "--> END " + request.method + " (binary " +
-                                requestBody?.contentLength() + "-byte body omitted)"
+                        "(binary " + requestBody?.contentLength() + "-byte body omitted)"
                     )
                 }
             }
@@ -214,8 +209,8 @@ class LogboxHttpLoggingInterceptor : Interceptor {
         response = try {
             chain.proceed(request)
         } catch (e: Exception) {
-            lbRequestBody.append("<-- HTTP FAILED: ").append(e)
-            logger.log(lbTitle.toString(), lbRequestHeaders.toString(), lbResponseBody.toString(), lbResponseHeaders.toString(), e.message ?: "HTTP FAILED", -1)
+            lbResponseBody.append("HTTP FAILED: ").append(e)
+            logger.log(lbTitle.toString(), lbRequestHeaders, lbRequestBody.toString(), lbResponseHeaders, lbResponseBody.toString(), -1)
             throw e
         }
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
@@ -223,23 +218,22 @@ class LogboxHttpLoggingInterceptor : Interceptor {
         val responseBody = response.body
         val contentLength = responseBody?.contentLength()
         val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
-        lbResponseBody.append("<-- ").append(response.code)
-            .append(if (response.message.isEmpty()) "" else ' '.toString() + response.message)
-            .append(' ').append(response.request.url).append(" (").append(tookMs).append("ms")
-            .append(if (!logHeaders) ", $bodySize body" else "").append(')')
+//        lbResponseBody.append("<-- ").append(response.code)
+//            .append(if (response.message.isEmpty()) "" else ' '.toString() + response.message)
+//            .append(' ').append(response.request.url).append(" (").append(tookMs).append("ms")
+//            .append(if (!logHeaders) ", $bodySize body" else "").append(')')
         if (logHeaders) {
             val headers = response.headers
             var i = 0
             val count = headers.size
             while (i < count) {
-                lbResponseHeaders.append(headers.name(i)).append(": ").append(headers.value(i))
-                    .append("\n")
+                lbResponseHeaders.add("${headers.name(i)}: ${headers.value(i)}")
                 i++
             }
             if (!logBody || !response.promisesBody()) {
-                lbResponseBody.append("<-- END HTTP")
+                lbResponseBody.append("(body not logged)")
             } else if (bodyHasUnknownEncoding(response.headers)) {
-                lbResponseBody.append("<-- END HTTP (encoded body omitted)")
+                lbResponseBody.append("(encoded body omitted)")
             } else {
                 responseBody?.let { responseBody ->
                     val source = responseBody.source()
@@ -264,27 +258,24 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                     }
 
                     if (!isPlaintext(buffer)) {
-                        lbResponseBody.append("\n")
-                        lbResponseBody.append("<-- END HTTP (binary ").append(buffer.size)
-                            .append("-byte body omitted)")
-                        logger.log(lbTitle.toString(), lbRequestHeaders.toString(), lbRequestBody.toString(), lbResponseHeaders.toString(), lbResponseBody.toString(), tookMs)
+                        lbResponseBody.append("(binary ").append(buffer.size).append("-byte body omitted)")
+                        logger.log(lbTitle.toString(), lbRequestHeaders, lbRequestBody.toString(), lbResponseHeaders, lbResponseBody.toString(), tookMs)
                         return response
                     }
                     if (contentLength != 0L) {
-                        lbResponseBody.append("\n")
                         lbResponseBody.append(buffer.clone().readString(charset))
                     }
-                    if (gzippedLength != null) {
-                        lbResponseBody.append("<-- END HTTP (").append(buffer.size).append("-byte, ")
-                            .append(gzippedLength).append("-gzipped-byte body)")
-                    } else {
-                        lbResponseBody.append("<-- END HTTP (").append(buffer.size)
-                            .append("-byte body)")
-                    }
-                } ?: lbResponseBody.append("<-- END HTTP (no body)")
+//                    if (gzippedLength != null) {
+//                        lbResponseBody.append("<-- END HTTP (").append(buffer.size).append("-byte, ")
+//                            .append(gzippedLength).append("-gzipped-byte body)")
+//                    } else {
+//                        lbResponseBody.append("<-- END HTTP (").append(buffer.size)
+//                            .append("-byte body)")
+//                    }
+                } ?: lbResponseBody.append("(no body)")
             }
         }
-        logger.log(lbTitle.toString(), lbRequestHeaders.toString(), lbRequestBody.toString(), lbResponseHeaders.toString(), lbResponseBody.toString(), tookMs)
+        logger.log(lbTitle.toString(), lbRequestHeaders, lbRequestBody.toString(), lbResponseHeaders, lbResponseBody.toString(), tookMs)
         return response
     }
 
