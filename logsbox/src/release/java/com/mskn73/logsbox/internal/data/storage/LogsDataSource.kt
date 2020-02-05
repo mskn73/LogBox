@@ -4,7 +4,10 @@ import com.mskn73.logsbox.internal.LogsDispatcher
 import com.mskn73.logsbox.internal.domain.Log
 import kotlinx.coroutines.withContext
 
-internal class LogsDataSource(private val database: LogsDatabase) {
+internal class LogsDataSource(
+    private val database: LogsDatabase,
+    private val maxRows: Int
+) {
 
     suspend fun getTypes(): List<String> = withContext(LogsDispatcher.io) {
         database.logsDao().getTypes()
@@ -29,6 +32,6 @@ internal class LogsDataSource(private val database: LogsDatabase) {
                 )
             }
         )
-        database.logsDao().deleteLastElements(20)
+        database.logsDao().deleteLastElements(maxRows)
     }
 }

@@ -26,7 +26,7 @@ object LogBoxFactory {
     fun getFragment(): Fragment =
         LogsBoxFragment.newInstance()
 
-    fun init(context: Context, databaseName: String = "log-box.db", shakeDetection: Boolean) {
+    fun init(context: Context, databaseName: String = "log-box.db", shakeDetection: Boolean, maxRows: Int=1000) {
         logsMainModule = LogsMainModule(context)
         addLog = logsMainModule?.provideAddLog()
 
