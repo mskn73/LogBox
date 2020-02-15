@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="logbox_colorPrimary">@android:color/holo_blue_light</color>
+    <color name="logbox_colorPrimaryDark">@android:color/holo_blue_dark</color>
+    <color name="logbox_colorAccent">@android:color/holo_blue_dark</color>
+    <color name="logbox_colorSelection">@android:color/white</color>
+    <color name="logbox_colorCode">#efefef</color>
+<!--    <color name="logbox_colorPrimary">#2291FF</color>-->
+<!--    <color name="logbox_colorPrimaryDark">#0E3746</color>-->
+<!--    <color name="logbox_colorAccent">#2291FF</color>-->
+
+</resources>

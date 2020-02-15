@@ -15,16 +15,35 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+    }
+
     buildTypes {
+        noop {
+            signingConfig signingConfigs.debug
+            debuggable true
+        }
+
         release {
+            debuggable true
+            signingConfig signingConfigs.debug
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
 
+
 dependencies {
-    implementation project(":logsbox")
+    implementation project(path: ':logsbox')
+    implementation project(path: '::logbox-retrofit-interceptor')
+
+//    implementation "com.github.mskn73:LogBox:0.0.7:Noop@aar"
+//    implementation "com.github.mskn73:LogBox:0.0.14"
 
     implementation libs.kotlin_stdlib
     implementation libs.constraint

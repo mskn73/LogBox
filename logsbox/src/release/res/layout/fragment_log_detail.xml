@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:fillViewport="true"
+    tools:context=".internal.presentation.detail.LogDetailFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            style="?logboxTitleText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingEnd="48dp"
+            android:ellipsize="start"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/share"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginEnd="@dimen/lb_text_marginDivider"
+            android:padding="@dimen/lb_text_marginDivider"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title"
+            app:srcCompat="@drawable/ic_share" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/requestTitle"
+            style="?logboxNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Request"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/requestHeaders"
+            style="?logboxLogText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/requestTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/request"
+            style="?logboxLogText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/requestHeaders" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/responseTitle"
+            style="?logboxNameText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/response_title"
+            app:layout_constraintEnd_toStartOf="@id/requestTime"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/request" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/requestTime"
+            style="?logboxNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/lb_text_marginDivider"
+            android:layout_marginEnd="@dimen/lb_text_marginToBorder"
+            app:layout_constraintBottom_toBottomOf="@id/responseTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/responseTitle"
+            tools:text="201ms" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/responseHeaders"
+            style="?logboxLogText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/responseTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/response"
+            style="?logboxLogText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/responseHeaders" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -1,39 +1,26 @@
 package com.mskn73.logsbox
 
 import android.content.Context
-import androidx.fragment.app.Fragment
-import com.mskn73.logsbox.internal.di.LogsMainModule
-import com.mskn73.logsbox.internal.domain.AddRecord
-import com.mskn73.logsbox.internal.presentation.logslist.LogsBoxFragment
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 object LogBox {
-    private var addRecord: AddRecord? = null
-    private var logsMainModule: LogsMainModule? = null
 
-    fun getFragment(): Fragment =
-        LogsBoxFragment.newInstance()
+    fun openLogBox(context: Context) {
+        LogBoxFactory.openLogs(context)
+    }
 
-    fun init(context: Context, databaseName: String = "log-box.db") {
-        logsMainModule = LogsMainModule(context)
-        addRecord = logsMainModule?.provideAddRecord()
+    fun init(context: Context, databaseName: String = "log-box.db", shakeDetection: Boolean = false, maxRows: Int=1000) {
+        LogBoxFactory.init(context, databaseName, shakeDetection)
     }
 
     fun log(
         type: String,
         title: String,
+        requestHeaders: List<String> = emptyList(),
         request: String,
-        response: String
+        responseHeaders: List<String> = emptyList(),
+        response: String,
+        responseTime: Long = -1
     ) {
-        addRecord?.let { addRecord ->
-            GlobalScope.launch {
-                addRecord(
-                    DeveloperRecord(
-                        title, type, request, response
-                    )
-                )
-            }
-        } ?: throw RuntimeException("LogBox is not initialized")
+        LogBoxFactory.log(type, title, requestHeaders, request, responseHeaders, responseTime, response)
     }
 }

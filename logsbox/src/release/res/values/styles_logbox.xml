@@ -1,0 +1,61 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="LogBoxLight" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">@color/logbox_colorPrimary</item>
+        <item name="colorPrimaryDark">@color/logbox_colorPrimaryDark</item>
+        <item name="colorAccent">@color/logbox_colorPrimaryDark</item>
+        <item name="android:windowBackground">@android:color/white</item>
+
+        <item name="logboxTitleText">@style/logboxTitleText_light</item>
+        <item name="logboxTabBar">@style/logboxTabBar_light</item>
+        <item name="logboxDateText">@style/logboxDateText_light</item>
+        <item name="logboxNameText">@style/logboxNameText_light</item>
+        <item name="logboxLogText">@style/logboxLogText_light</item>
+
+    </style>
+
+
+    <style name="logboxTitleText_light" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@color/logbox_colorPrimary</item>
+        <item name="android:paddingTop">@dimen/lb_text_marginToBorder</item>
+        <item name="android:paddingBottom">@dimen/lb_text_marginToBorder</item>
+        <item name="android:paddingStart">@dimen/lb_text_marginToBorder</item>
+        <item name="android:paddingEnd">@dimen/lb_text_marginDivider</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-medium</item>
+    </style>
+
+    <style name="logboxTabBar_light" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@color/logbox_colorPrimary</item>
+        <item name="tabIndicatorColor">@color/logbox_colorSelection</item>
+        <item name="tabTextColor">@color/logbox_colorSelection</item>
+    </style>
+
+    <style name="logboxDateText_light" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginTop">@dimen/lb_text_marginToBorder</item>
+        <item name="android:layout_marginBottom">@dimen/lb_text_marginToBorder</item>
+        <item name="android:layout_marginStart">@dimen/lb_text_marginToBorder</item>
+        <item name="android:layout_marginEnd">@dimen/lb_text_marginToBorder</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif-light</item>
+    </style>
+
+    <style name="logboxNameText_light" parent="TextAppearance.AppCompat">
+        <item name="android:layout_marginTop">@dimen/lb_text_marginToBorder</item>
+        <item name="android:layout_marginBottom">@dimen/lb_text_marginToBorder</item>
+        <item name="android:layout_marginStart">@dimen/lb_text_marginDivider</item>
+        <item name="android:layout_marginEnd">@dimen/lb_text_marginToBorder</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">sans-serif</item>
+    </style>
+
+    <style name="logboxLogText_light" parent="TextAppearance.AppCompat">
+        <item name="android:layout_margin">@dimen/lb_text_marginDivider</item>
+        <item name="android:padding">@dimen/lb_text_marginDivider</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily" tools:targetApi="jelly_bean">monospace</item>
+        <item name="android:background">@color/logbox_colorCode</item>
+    </style>
+</resources>

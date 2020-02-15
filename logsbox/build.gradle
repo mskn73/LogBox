@@ -7,8 +7,8 @@ apply plugin: 'de.mannodermaus.android-junit5'
 apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.mskn73'
 
-
 android {
+
     compileSdkVersion compile_sdk
 
     packagingOptions {
@@ -29,9 +29,19 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
+
+        vectorDrawables.useSupportLibrary = true
+
+        buildConfigField "boolean", "NO_OP", "false"
     }
 
     buildTypes {
+        noop {
+            minifyEnabled false
+            buildConfigField "boolean", "NO_OP", "true"
+            consumerProguardFiles 'proguard-rules.pro', 'proguard-noop.pro'
+        }
+
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -49,6 +59,20 @@ android {
     }
 }
 
+android.libraryVariants.all { variant ->
+    if (variant.name.toLowerCase().contains("debug")) {
+        return
+    }
+    def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+    artifacts {
+        archives(bundleTask.archivePath) {
+            classifier variant.name.capitalize().replace("Release", "")
+            builtBy bundleTask
+            name = project.name
+        }
+    }
+}
+
 dependencies {
     kapt libs.arch_comp_room_compiler
     kaptTest libs.arch_comp_room_compiler
@@ -61,7 +85,9 @@ dependencies {
     implementation libs.arch_comp_room_ktx
     implementation libs.constraint
     implementation libs.design
+    implementation libs.gson
     implementation libs.kotlin_stdlib
+    implementation libs.seismic
 
     testImplementation(libs.arch_comp_room_test) {
         exclude module: 'junit'
@@ -76,7 +102,7 @@ dependencies {
     testRuntimeOnly libs.junit_engine
 
     androidTestImplementation libs.mockito_kotlin
-    androidTestImplementation (libs.barista) {
+    androidTestImplementation(libs.barista) {
         exclude group: 'com.android.support'
         exclude group: 'org.jetbrains.kotlin' // Only if you already use Kotlin in your project
     }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:gravity="center_vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/item_number"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        style="?logboxDateText"
+        android:lines="2"
+        tools:text="29/1/20 8:06"/>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?logboxNameText"
+        tools:text=".../v1/register"/>
+</LinearLayout>

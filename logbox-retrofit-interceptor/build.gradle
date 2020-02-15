@@ -1,0 +1,72 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'de.mannodermaus.android-junit5'
+
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.mskn73'
+
+android {
+
+    compileSdkVersion compile_sdk
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'LICENSE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
+
+    defaultConfig {
+        targetSdkVersion target_sdk
+        minSdkVersion min_sdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        noop {
+            signingConfig signingConfigs.debug
+            debuggable true
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+android.libraryVariants.all { variant ->
+    if (variant.name.toLowerCase().contains("debug")) {
+        return
+    }
+    def bundleTask = tasks["bundle${variant.name.capitalize()}Aar"]
+    artifacts {
+        archives(bundleTask.archivePath) {
+            classifier variant.name.capitalize().replace("Release", "")
+            builtBy bundleTask
+            name = project.name
+        }
+    }
+}
+
+dependencies {
+    api project(path: ':logsbox')
+
+    implementation libs.kotlin_stdlib
+    implementation libs.okhttp3
+
+    testImplementation libs.junit_api
+    testImplementation libs.kotlintest
+    testImplementation libs.mockito_kotlin
+
+    testRuntimeOnly libs.junit_engine
+}

@@ -1,2 +1,2 @@
-include ':app', ':logsbox'
+include ':app', ':logsbox', ':logbox-retrofit-interceptor'
 rootProject.name='LogsBox Sample'
