@@ -45,6 +45,10 @@ internal class LogsBoxFragment : Fragment() {
         TabLayoutMediator(tab_layout, pager) { tab, position ->
             tab.text = types[position]
         }.attach()
+
+        if (types.size <= 1) {
+            tab_layout.visibility = View.GONE
+        }
     }
 
     private inner class ScreenSlidePagerAdapter(
