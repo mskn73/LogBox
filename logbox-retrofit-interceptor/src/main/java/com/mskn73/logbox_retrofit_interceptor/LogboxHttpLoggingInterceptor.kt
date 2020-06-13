@@ -5,7 +5,6 @@ import okhttp3.Headers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import okhttp3.internal.http.promisesBody
 import okio.Buffer
 import okio.GzipSource
 import java.io.EOFException
@@ -142,11 +141,11 @@ class LogboxHttpLoggingInterceptor : Interceptor {
         }
         val logBody = level == Level.BODY
         val logHeaders = logBody || level == Level.HEADERS
-        val requestBody = request.body
+        val requestBody = request.body()
         val connection = chain.connection()
         var requestStartMessage = (
-                request.method +
-                ' ' + request.url +
+                request.method() +
+                ' ' + request.url() +
                 if (connection != null) " " + connection.protocol() else "")
         if (!logHeaders) {
             requestBody?.let { body ->
@@ -165,9 +164,9 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                     lbRequestHeaders.add("Content-Length: ${requestBody.contentLength()}")
                 }
             }
-            val headers = request.headers
+            val headers = request.headers()
             var i = 0
-            val count = headers.size
+            val count = headers.size()
             while (i < count) {
                 val name = headers.name(i)
                 // Skip headers from the request body as they are explicitly logged above.
@@ -181,10 +180,10 @@ class LogboxHttpLoggingInterceptor : Interceptor {
             }
             if (!logBody) {
                 requestBody?.let { _ ->
-                    lbRequestBody.append("(body not logged)").append(request.method).append("\n")
+                    lbRequestBody.append("(body not logged)").append(request.method()).append("\n")
                 }
-            } else if (bodyHasUnknownEncoding(request.headers)) {
-                lbRequestBody.append(request.method)
+            } else if (bodyHasUnknownEncoding(request.headers())) {
+                lbRequestBody.append(request.method())
                     .append("(bodyHasUnknownEncoding - encoded body omitted)").append("\n")
             } else {
                 val buffer = Buffer()
@@ -215,7 +214,7 @@ class LogboxHttpLoggingInterceptor : Interceptor {
         }
         val tookMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNs)
         // lbTitle.append(" | ").append(request.url).append(" (").append(tookMs).append(" ms)")
-        val responseBody = response.body
+        val responseBody = response.body()
         val contentLength = responseBody?.contentLength()
         val bodySize = if (contentLength != -1L) "$contentLength-byte" else "unknown-length"
 //        lbResponseBody.append("<-- ").append(response.code)
@@ -223,25 +222,25 @@ class LogboxHttpLoggingInterceptor : Interceptor {
 //            .append(' ').append(response.request.url).append(" (").append(tookMs).append("ms")
 //            .append(if (!logHeaders) ", $bodySize body" else "").append(')')
         if (logHeaders) {
-            val headers = response.headers
+            val headers = response.headers()
             var i = 0
-            val count = headers.size
+            val count = headers.size()
             while (i < count) {
                 lbResponseHeaders.add("${headers.name(i)}: ${headers.value(i)}")
                 i++
             }
-            if (!logBody || !response.promisesBody()) {
+            if (!logBody || response.body() == null) {
                 lbResponseBody.append("(body not logged)")
-            } else if (bodyHasUnknownEncoding(response.headers)) {
+            } else if (bodyHasUnknownEncoding(response.headers())) {
                 lbResponseBody.append("(encoded body omitted)")
             } else {
                 responseBody?.let { responseBody ->
                     val source = responseBody.source()
                     source.request(Long.MAX_VALUE) // Buffer the entire body.
-                    var buffer = source.buffer
+                    var buffer = source.buffer()
                     var gzippedLength: Long? = null
                     if ("gzip".equals(headers["Content-Encoding"], ignoreCase = true)) {
-                        gzippedLength = buffer.size
+                        gzippedLength = buffer.size()
                         var gzippedResponseBody: GzipSource? = null
                         try {
                             gzippedResponseBody = GzipSource(buffer.clone())
@@ -258,7 +257,7 @@ class LogboxHttpLoggingInterceptor : Interceptor {
                     }
 
                     if (!isPlaintext(buffer)) {
-                        lbResponseBody.append("(binary ").append(buffer.size).append("-byte body omitted)")
+                        lbResponseBody.append("(binary ").append(buffer.size()).append("-byte body omitted)")
                         logger.log(lbTitle.toString(), lbRequestHeaders, lbRequestBody.toString(), lbResponseHeaders, lbResponseBody.toString(), tookMs)
                         return response
                     }
@@ -294,7 +293,7 @@ class LogboxHttpLoggingInterceptor : Interceptor {
         private fun isPlaintext(buffer: Buffer): Boolean {
             return try {
                 val prefix = Buffer()
-                val byteCount = if (buffer.size < 64) buffer.size else 64
+                val byteCount = if (buffer.size() < 64) buffer.size() else 64
                 buffer.copyTo(prefix, 0, byteCount)
                 for (i in 0..15) {
                     if (prefix.exhausted()) {
